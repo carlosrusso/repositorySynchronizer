@@ -201,7 +201,7 @@
   <hop> <from>gen_folder_lines &#x28;if needed&#x29; 2 2</from><to>Import</to><enabled>Y</enabled> </hop>
   <hop> <from>calculate actions&#x3a; entry</from><to>flagfield --&#x3e; status 2</to><enabled>Y</enabled> </hop>
   <hop> <from>flagfield --&#x3e; status 2</from><to>source&#x26;dest 2</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values</from><to>cache diff</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select values</from><to>cache diff</to><enabled>N</enabled> </hop>
   <hop> <from>Replace in string</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
   <hop> <from>source&#x26;dest 2</from><to>gen_folder_lines &#x28;if needed&#x29; 2 2</to><enabled>Y</enabled> </hop>
   <hop> <from>source&#x26;dest</from><to>gen_folder_lines &#x28;if needed&#x29; 2</to><enabled>Y</enabled> </hop>

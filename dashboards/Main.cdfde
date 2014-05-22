@@ -6132,6 +6132,26 @@
       "type": "JavaScript"
      },
      {
+      "name": "actionParameters",
+      "value": "[]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "successCallback",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "failureCallback",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "Datasource",
+      "value": "",
+      "type": "Datasource"
+     },
+     {
       "name": "priority",
       "value": 5,
       "type": "Integer"
@@ -6210,6 +6230,26 @@
       "type": "JavaScript"
      },
      {
+      "name": "actionParameters",
+      "value": "[]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "successCallback",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "failureCallback",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "Datasource",
+      "value": "",
+      "type": "Datasource"
+     },
+     {
       "name": "priority",
       "value": 5,
       "type": "Integer"
@@ -6286,6 +6326,26 @@
       "name": "expression",
       "value": "function f(){\n    var isButtonEnabled = !$(\"#\"+this.htmlObject).find(\"button\").hasClass(\"disabled\");\n    \n    /* if button is enabled, do the job */\n    if( isButtonEnabled ){\n            \n        var pluginId = \"repositorySynchronizer\",\n            endpoint = \"syncRepositories\",\n            endpointOpts = {\n                params:{}    \n            },\n            dialog = Dashboards.getComponentByName(\"${c:dialogComponent}\"),\n            $dialogBodyCont = $(\"<div class='dialogContentContainer'></div>\"),\n            deleteStatus = Dashboards.getParameterValue(\"${p:fs2jcrDeleteParam}\");\n    \n        var files2updateList = Dashboards.getParameterValue(\"${p:fs2jcrToBeUpdatedList}\");\n        if(files2updateList.length > 0){\n            $dialogMessage = $(\"<div class='dialogMessage toBeUpdated'>\"+files2updateList.length + \" files will be updated in JCR\"+\"</div>\");\n            $dialogMessage.appendTo($dialogBodyCont);\n        }\n    \n        var files2createList = Dashboards.getParameterValue(\"${p:fs2jcrToBeCreatedList}\");\n        if(files2createList.length > 0){\n            $dialogMessage = $(\"<div class='dialogMessage toBeCreated'>\"+files2createList.length + \" files will be created in JCR\"+\"</div>\");\n            $dialogMessage.appendTo($dialogBodyCont);\n        }\n        if( deleteStatus === \"Y\"){\n            var files2deleteList = Dashboards.getParameterValue(\"${p:fs2jcrToBeDeletedList}\");\n            if(files2deleteList.length > 0){\n                $dialogMessage = $(\"<div class='dialogMessage toBeDeleted'>\"+files2deleteList.length + \" files will be deleted in JCR\"+\"</div>\");\n                $dialogMessage.appendTo($dialogBodyCont);\n                $dialogTable = $(\"<div class='dialogTable'></div>\");\n                $.each(files2deleteList,function(idx,ele){\n                    $(\"<div class='dialogTableRow'>\"+ele+\"</div>\").appendTo($dialogTable);   \n                });\n                $dialogTable.appendTo($dialogBodyCont);\n            }\n        }\n        endpointOpts.params[\"delete\"] = Dashboards.getParameterValue(\"${p:fs2jcrDeleteParam}\");\n        endpointOpts.params[\"selectedAction\"] = \"I\";\n        endpointOpts.params[\"originRepoLocation\"] = \"File System\";    \n        endpointOpts.params[\"destinationRepoLocation\"] = \"JCR\";\n        \n        var successCallback = function () {\n                synchronizer.incUpdateEvent(\"${p:updateDashboardContentEvent}\");\n                Dashboards.decrementRunningCalls();\n            },\n            errorCallback = function () {\n                synchronizer.incUpdateEvent(\"${p:updateDashboardContentEvent}\");\n                Dashboards.decrementRunningCalls();\n            };\n            \n        var okCallback = function () {\n                dialog.close();\n                Dashboards.incrementRunningCalls();\n                synchronizer.runEndpoint(pluginId,endpoint,$.extend(endpointOpts,{\n                    success: successCallback,\n                    error: errorCallback\n                    }));\n            },\n            cancelCallback = function () {\n                dialog.close();\n            };\n        \n        dialog.open({\n            content:$dialogBodyCont,\n            buttons:[\n                { text: \"Cancel\", click: cancelCallback, \"class\":\"cancel\" },\n                { text: \"OK\", click: okCallback, \"class\": \"ok\" }\n            ],\n            width: 355\n        });\n    }\n}",
       "type": "JavaScript"
+     },
+     {
+      "name": "actionParameters",
+      "value": "[]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "successCallback",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "failureCallback",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "Datasource",
+      "value": "",
+      "type": "Datasource"
      },
      {
       "name": "priority",
@@ -6660,7 +6720,7 @@
      },
      {
       "name": "priority",
-      "value": 5,
+      "value": "6",
       "type": "Integer"
      },
      {
@@ -6858,7 +6918,7 @@
      },
      {
       "name": "priority",
-      "value": 5,
+      "value": "7",
       "type": "Integer"
      },
      {
@@ -7308,6 +7368,26 @@
       "type": "JavaScript"
      },
      {
+      "name": "actionParameters",
+      "value": "[]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "successCallback",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "failureCallback",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "Datasource",
+      "value": "",
+      "type": "Datasource"
+     },
+     {
       "name": "priority",
       "value": 5,
       "type": "Integer"
@@ -7386,6 +7466,26 @@
       "type": "JavaScript"
      },
      {
+      "name": "actionParameters",
+      "value": "[]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "successCallback",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "failureCallback",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "Datasource",
+      "value": "",
+      "type": "Datasource"
+     },
+     {
       "name": "priority",
       "value": 5,
       "type": "Integer"
@@ -7462,6 +7562,26 @@
       "name": "expression",
       "value": "function f(){\n    var $deleteOverallCont =$('#' + this.htmlObject).parents(\".deleteCont\"),\n        deleteStatus = Dashboards.getParameterValue(\"${p:fs2jcrDeleteParam}\");\n    deleteStatus = synchronizer.toggleStringifiedBoolean(deleteStatus);\n    Dashboards.fireChange('${p:fs2jcrDeleteParam}', deleteStatus);\n    if( deleteStatus === \"Y\" ){\n        $deleteOverallCont.addClass('checked');\n    } else {\n        $deleteOverallCont.removeClass('checked');        \n    }\n}",
       "type": "JavaScript"
+     },
+     {
+      "name": "actionParameters",
+      "value": "[]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "successCallback",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "failureCallback",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "Datasource",
+      "value": "",
+      "type": "Datasource"
      },
      {
       "name": "priority",
@@ -7681,6 +7801,26 @@
       "name": "expression",
       "value": "function f(){\n    location.reload();    \n}",
       "type": "JavaScript"
+     },
+     {
+      "name": "actionParameters",
+      "value": "[]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "successCallback",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "failureCallback",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "Datasource",
+      "value": "",
+      "type": "Datasource"
      },
      {
       "name": "priority",
@@ -8420,6 +8560,16 @@
       "name": "name",
       "value": "diffTableQuery",
       "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUT",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Inferred",
+      "type": "kettleOutputCustom"
      }
     ],
     "meta": "CPK",
@@ -8436,6 +8586,16 @@
       "name": "name",
       "value": "checkRepositoriesValidityQuery",
       "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUT",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Inferred",
+      "type": "kettleOutputCustom"
      }
     ],
     "meta": "CPK",
