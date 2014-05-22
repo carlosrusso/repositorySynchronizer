@@ -403,7 +403,7 @@
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;previewDifferences.ktr</filename>
+      <filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;_list_and_compare.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -434,6 +434,18 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>288</xloc>
+      <yloc>160</yloc>
+      </entry>
+    <entry>
+      <name>Delete list_and_compare_output.txt</name>
+      <description/>
+      <type>DELETE_FILE</type>
+      <filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;list_and_compare_output.txt</filename>
+      <fail_if_file_not_exists>N</fail_if_file_not_exists>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>160</xloc>
       <yloc>160</yloc>
       </entry>
   </entries>
@@ -521,12 +533,21 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>list_and_compare</to>
+      <to>Delete list_and_compare_output.txt</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Delete list_and_compare_output.txt</from>
+      <to>list_and_compare</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
     </hop>
   </hops>
   <notepads>
