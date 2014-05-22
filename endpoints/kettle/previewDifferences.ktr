@@ -114,8 +114,8 @@
   <notepads>
     <notepad>
       <note>Cache isn&#x27;t working because the file is written byt the list_and_multicompare step</note>
-      <xloc>800</xloc>
-      <yloc>160</yloc>
+      <xloc>736</xloc>
+      <yloc>64</yloc>
       <width>448</width>
       <heigth>24</heigth>
       <fontname>Arial</fontname>
@@ -171,7 +171,9 @@
   <hop> <from>use cached value</from><to>Load file content in memory</to><enabled>Y</enabled> </hop>
   <hop> <from>Switch &#x2f; Case 2</from><to>use cached value</to><enabled>Y</enabled> </hop>
   <hop> <from>list_and_multicompare</from><to>Block this step until steps finish</to><enabled>Y</enabled> </hop>
-  <hop> <from>Block this step until steps finish</from><to>output text file</to><enabled>Y</enabled> </hop>
+  <hop> <from>Block this step until steps finish</from><to>Join Rows &#x28;cartesian product&#x29;</to><enabled>Y</enabled> </hop>
+  <hop> <from>Join Rows &#x28;cartesian product&#x29;</from><to>output text file</to><enabled>Y</enabled> </hop>
+  <hop> <from>Get Variables 3</from><to>Join Rows &#x28;cartesian product&#x29;</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Export</name>
@@ -1265,7 +1267,7 @@
     <include>N</include>
     <include_field/>
     <rownum>N</rownum>
-    <addresultfile>Y</addresultfile>
+    <addresultfile>N</addresultfile>
     <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
     <rownum_field/>
     <encoding/>
@@ -1273,7 +1275,7 @@
       <name/>
       <filemask/>
       <exclude_filemask/>
-      <file_required/>
+      <file_required>N</file_required>
       <include_subfolders>N</include_subfolders>
       </file>
     <fields>
@@ -1422,8 +1424,8 @@
         </field>
       </fields>
     <limit>0</limit>
-    <IsInFields>N</IsInFields>
-    <DynamicFilenameField/>
+    <IsInFields>Y</IsInFields>
+    <DynamicFilenameField>uri</DynamicFilenameField>
     <shortFileFieldName/>
     <pathFieldName/>
     <hiddenFieldName/>
@@ -1518,8 +1520,8 @@
     <compression>None</compression>
     <encoding>UTF-8</encoding>
     <endedLine/>
-    <fileNameInField>N</fileNameInField>
-    <fileNameField/>
+    <fileNameInField>Y</fileNameInField>
+    <fileNameField>cache_file</fileNameField>
     <create_parent_folder>Y</create_parent_folder>
     <file>
       <name>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;list_and_multicompare_output</name>
@@ -1675,8 +1677,72 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>960</xloc>
-      <yloc>192</yloc>
+      <xloc>1024</xloc>
+      <yloc>160</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Join Rows &#x28;cartesian product&#x29;</name>
+    <type>JoinRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
+      <prefix>out</prefix>
+      <cache_size>500</cache_size>
+      <main/>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue/>
+ <function>&#x3d;</function>
+ <rightvalue/>
+ </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>896</xloc>
+      <yloc>160</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get Variables 3</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>cache_file</name>
+        <variable>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;list_and_multicompare_output</variable>
+        <type>None</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>800</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
