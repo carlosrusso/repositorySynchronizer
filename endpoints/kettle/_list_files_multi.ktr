@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>_getLocations</name>
+    <name>_list_files_multi</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -16,8 +16,13 @@
         </parameter>
         <parameter>
             <name>cpk.solution.system.dir</name>
-            <default_value>&#x24;&#x7b;cpk.plugin.dir&#x7d;&#x2f;..&#x2f;</default_value>
+            <default_value>&#x24;&#x7b;cpk.plugin.dir&#x7d;&#x2f;..</default_value>
             <description/>
+        </parameter>
+        <parameter>
+            <name>location</name>
+            <default_value>JCR</default_value>
+            <description>&#x22;File System&#x22; or &#x22;JCR&#x22;</description>
         </parameter>
     </parameters>
     <log>
@@ -77,27 +82,69 @@
     <clusterschemas>
     </clusterschemas>
   <created_user>-</created_user>
-  <created_date>2013&#x2f;05&#x2f;23 12&#x3a;32&#x3a;03.883</created_date>
+  <created_date>2013&#x2f;09&#x2f;19 00&#x3a;39&#x3a;48.368</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2013&#x2f;05&#x2f;23 12&#x3a;32&#x3a;03.883</modified_date>
+  <modified_date>2013&#x2f;09&#x2f;19 00&#x3a;39&#x3a;48.368</modified_date>
   </info>
   <notepads>
     <notepad>
-      <note>The disabled paths were left here to aid debugging&#xa;&#xa;On Windows machines, jcr-solution&#x3a;&#x2f;&#x2f;&#x2f;pentaho&#x21;&#x2f; is transformed to jcr-solution&#x3a;&#x5c;pentaho&#x21;&#x2f;, &#xa;which breaks PRS. The solution is to have an http URI such as&#xa;jcr-solution&#x3a;http&#x3a;&#x2f;&#x2f;someserver&#x2f;pentaho&#x21;&#x2f; &#xa;in prs.xml&#xa;</note>
-      <xloc>416</xloc>
-      <yloc>416</yloc>
-      <width>416</width>
-      <heigth>87</heigth>
-      <fontname>Arial</fontname>
-      <fontsize>10</fontsize>
+      <note>&#xa;&#x2a; _list_and_compare&#xa;	&#x2a; Description&#x3a; List the differences &#x28;files changed, new files and deleted files&#x29; on the origin repository in relation to the destination repository.&#xa;      _Remark_&#x3a; The items in the list for which the corresponding modification status is &#x2a;to be deleted&#x2a; should be displayed only in the case the parameter deleteBoolean &#x28;see below&#x29; is set to true&#x3b;&#xa;&#xa;	&#x2a; Parameters&#x3a;&#xa;      originRepoLocation,&#xa;      destinationRepoLocation, &#xa;      deleteBoolean &#x28;stating if files on the destination repo that do not exist on the origin repo should be deleted or not&#x29;, &#xa;      selectedAction &#x28;stating if the selected action was &#x22;Synchronize JCR with File System&#x22;, &#x22;Export from JCR&#x22; or &#x22;Import to JCR&#x22;&#x29;&#xa;&#xa;	&#x2a; Output&#x3a; table containing all changed files&#x2f;directories.&#xa;      Should contain the &#x2a;Id&#x2a;, the &#x2a;location&#x2a; and the &#x2a;modification status&#x2a; &#x28;&#x2a;to be modified&#x2a;, &#x2a;to be deleted&#x2a; or &#x2a;to be created&#x2a;&#x29;, for each item on the list.&#xa;      Additionally some kind of &#x2a;&#x22;direction status&#x22;&#x2a; information, stating from which repository to which repository the changes are being mirrored for each item, should be present.&#xa;&#xa;&#xa;</note>
+      <xloc>1016</xloc>
+      <yloc>1</yloc>
+      <width>1389</width>
+      <heigth>248</heigth>
+      <fontname>Courier New</fontname>
+      <fontsize>8</fontsize>
       <fontbold>N</fontbold>
       <fontitalic>N</fontitalic>
       <fontcolorred>0</fontcolorred>
       <fontcolorgreen>0</fontcolorgreen>
       <fontcolorblue>0</fontcolorblue>
       <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>205</backgroundcolorgreen>
-      <backgroundcolorblue>112</backgroundcolorblue>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>255</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Criteria for establishing differences&#x3a;&#xa;- name and relative location of file&#xa;- size</note>
+      <xloc>840</xloc>
+      <yloc>140</yloc>
+      <width>223</width>
+      <heigth>55</heigth>
+      <fontname>Microsoft Sans Serif</fontname>
+      <fontsize>9</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>192</backgroundcolorred>
+      <backgroundcolorgreen>192</backgroundcolorgreen>
+      <backgroundcolorblue>192</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>NAMED PARAMETERS&#xa;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#xa;&#xa;destinationRepoLocation&#xa;originRepoLocation&#xa;delete &#x28;Y&#x2f;N&#x29;&#xa;selectedAction	S&#x3a; synch &#x7c; E&#x3a; export &#x7c; I&#x3a; import&#xa;&#xa;Internal use&#x3a;&#xa;operation_type P&#x3a;preview &#x28;default&#x29; &#x7c; C&#x3a;copy &#x7c; CF&#x3a; copy folders &#x7c; D&#x3a; delete files &#x7c; DF&#x3a; delete folders &#x7c; M&#x3a; merge&#x28;&#x3f;&#x29;&#xa;&#xa;</note>
+      <xloc>1016</xloc>
+      <yloc>238</yloc>
+      <width>673</width>
+      <heigth>190</heigth>
+      <fontname>Microsoft Sans Serif</fontname>
+      <fontsize>9</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>128</backgroundcolorblue>
       <bordercolorred>100</bordercolorred>
       <bordercolorgreen>100</bordercolorgreen>
       <bordercolorblue>100</bordercolorblue>
@@ -105,23 +152,21 @@
     </notepad>
   </notepads>
   <order>
-  <hop> <from>Environment Substitute</from><to>clean path</to><enabled>Y</enabled> </hop>
-  <hop> <from>Get data from XML</from><to>Environment Substitute</to><enabled>Y</enabled> </hop>
-  <hop> <from>JCR</from><to>NormalizePath</to><enabled>N</enabled> </hop>
-  <hop> <from>is JCR&#x3f;</from><to>JCR</to><enabled>N</enabled> </hop>
-  <hop> <from>is JCR&#x3f;</from><to>Get File Names</to><enabled>N</enabled> </hop>
-  <hop> <from>Get File Names</from><to>Select values</to><enabled>N</enabled> </hop>
-  <hop> <from>Select values</from><to>append &#x2f;</to><enabled>N</enabled> </hop>
-  <hop> <from>append &#x2f;</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
-  <hop> <from>clean path</from><to>is JCR&#x3f;</to><enabled>N</enabled> </hop>
-  <hop> <from>JCR</from><to>append &#x2f;</to><enabled>N</enabled> </hop>
-  <hop> <from>NormalizePath</from><to>append &#x2f;</to><enabled>Y</enabled> </hop>
-  <hop> <from>append &#x2f;</from><to>Write to log 2</to><enabled>Y</enabled> </hop>
-  <hop> <from>clean path</from><to>NormalizePath</to><enabled>Y</enabled> </hop>
+  <hop> <from>filename_without_location destination</from><to>Sort rows &#x28;left&#x29;</to><enabled>Y</enabled> </hop>
+  <hop> <from>Filter rows</from><to>filename_without_location destination</to><enabled>Y</enabled> </hop>
+  <hop> <from>Get data from XML</from><to>Calculator</to><enabled>Y</enabled> </hop>
+  <hop> <from>Calculator</from><to>Group by</to><enabled>Y</enabled> </hop>
+  <hop> <from>Sort rows &#x28;left&#x29;</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
+  <hop> <from>Sort rows &#x28;left&#x29;</from><to>Write to log</to><enabled>N</enabled> </hop>
+  <hop> <from>INPUT</from><to>Get locations</to><enabled>Y</enabled> </hop>
+  <hop> <from>Get locations</from><to>Join&#x3a; location and exclusion list</to><enabled>Y</enabled> </hop>
+  <hop> <from>Join&#x3a; location and exclusion list</from><to>Get File Names in destination</to><enabled>Y</enabled> </hop>
+  <hop> <from>Get File Names in destination</from><to>Filter rows</to><enabled>Y</enabled> </hop>
+  <hop> <from>Group by</from><to>Join&#x3a; location and exclusion list</to><enabled>Y</enabled> </hop>
   </order>
   <step>
-    <name>Environment Substitute</name>
-    <type>UserDefinedJavaClass</type>
+    <name>Calculator</name>
+    <type>Calculator</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -130,54 +175,49 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-
-    <definitions>
-        <definition>
-        <class_type>TRANSFORM_CLASS</class_type>
-
-        <class_name>Processor</class_name>
-
-        <class_source><![CDATA[private FieldHelper elementPathOut = null;
-private FieldHelper elementPathIn = null;
-private FieldHelper elementNameOut = null;
-private FieldHelper elementNameIn = null;
-
-public boolean processRow(StepMetaInterface smi, StepDataInterface sdi) throws KettleException
-{
-	Object[] r = getRow();
-	if (r == null) {
-		setOutputDone();
-		return false;
-	}
-
-    if (first)
-    {
-        first = false;
-		elementPathOut = get(Fields.Out,"elementPath");
-		elementPathIn = get(Fields.In,"elementPath");
-		elementNameOut = get(Fields.Out,"elementName");
-		elementNameIn = get(Fields.In,"elementName");
-    }
-	
-	String inputPath = elementPathIn.getString(r);
-	String inputName = elementNameIn.getString(r);
-	// It is always safest to call createOutputRow() to ensure that your output row's Object[] is large
-    // enough to handle any new fields you are creating in this step.
-    r = createOutputRow(r, data.outputRowMeta.size());
-	
-    elementPathOut.setValue(r,parent.environmentSubstitute(inputPath));
-	elementNameOut.setValue(r,parent.environmentSubstitute(inputName));
-	// Send the row on to the next step.
-    putRow(data.outputRowMeta, r);
-
-	return true;
-}
-]]></class_source>
-        </definition>
-    </definitions>
-    <fields>
-    </fields><clear_result_fields>N</clear_result_fields>
-<info_steps></info_steps><target_steps></target_steps><usage_parameters></usage_parameters>     <cluster_schema/>
+       <calculation><field_name>open</field_name>
+<calc_type>CONSTANT</calc_type>
+<field_a>&#x28;</field_a>
+<field_b/>
+<field_c/>
+<value_type>String</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<remove>Y</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+       <calculation><field_name>close</field_name>
+<calc_type>CONSTANT</calc_type>
+<field_a>&#x29;</field_a>
+<field_b/>
+<field_c/>
+<value_type>String</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<remove>Y</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+       <calculation><field_name>regex_part</field_name>
+<calc_type>ADD3</calc_type>
+<field_a>open</field_a>
+<field_b>pattern</field_b>
+<field_c>close</field_c>
+<value_type>String</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>192</xloc>
       <yloc>160</yloc>
@@ -186,8 +226,8 @@ public boolean processRow(StepMetaInterface smi, StepDataInterface sdi) throws K
     </step>
 
   <step>
-    <name>Get File Names</name>
-    <type>GetFileNames</type>
+    <name>Filter rows</name>
+    <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -196,18 +236,47 @@ public boolean processRow(StepMetaInterface smi, StepDataInterface sdi) throws K
            <method>none</method>
            <schema_name/>
            </partitioning>
+<send_true_to/>
+<send_false_to/>
+    <compare>
+<condition>
+ <negated>Y</negated>
+ <leftvalue>filename</leftvalue>
+ <function>REGEXP</function>
+ <rightvalue>filter_regex</rightvalue>
+ </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>224</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get File Names in destination</name>
+    <type>GetFileNames</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
     <filter>
-      <filterfiletype>all_files</filterfiletype>
+      <filterfiletype>only_files</filterfiletype>
     </filter>
-    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
+    <doNotFailIfNoFile>N</doNotFailIfNoFile>
     <rownum>N</rownum>
     <isaddresult>N</isaddresult>
     <filefield>Y</filefield>
     <rownum_field/>
-    <filename_Field>elementPath</filename_Field>
-    <wildcard_Field/>
+    <filename_Field>location</filename_Field>
+    <wildcard_Field>wildcard</wildcard_Field>
     <exclude_wildcard_Field/>
-    <dynamic_include_subfolders>N</dynamic_include_subfolders>
+    <dynamic_include_subfolders>Y</dynamic_include_subfolders>
     <limit>0</limit>
     <file>
       <name/>
@@ -218,8 +287,8 @@ public boolean processRow(StepMetaInterface smi, StepDataInterface sdi) throws K
     </file>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>544</xloc>
-      <yloc>64</yloc>
+      <xloc>320</xloc>
+      <yloc>256</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -257,24 +326,9 @@ public boolean processRow(StepMetaInterface smi, StepDataInterface sdi) throws K
     </file>
     <fields>
       <field>
-        <name>elementName</name>
-        <xpath>&#x40;name</xpath>
-        <element_type>node</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>elementPath</name>
-        <xpath>&#x40;path</xpath>
-        <element_type>node</element_type>
+        <name>pattern</name>
+        <xpath>&#x40;pattern</xpath>
+        <element_type>attribut</element_type>
         <result_type>valueof</result_type>
         <type>String</type>
         <format/>
@@ -288,10 +342,10 @@ public boolean processRow(StepMetaInterface smi, StepDataInterface sdi) throws K
       </field>
     </fields>
     <limit>0</limit>
-    <loopxpath>&#x2f;prs&#x2f;locations&#x2f;location</loopxpath>
+    <loopxpath>&#x2f;prs&#x2f;excludes&#x2f;exclude</loopxpath>
     <IsInFields>N</IsInFields>
-    <IsAFile>Y</IsAFile>
-    <XmlField>cpk_file</XmlField>
+    <IsAFile>N</IsAFile>
+    <XmlField/>
     <prunePath/>
     <shortFileFieldName/>
     <pathFieldName/>
@@ -303,15 +357,15 @@ public boolean processRow(StepMetaInterface smi, StepDataInterface sdi) throws K
     <sizeFieldName/>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>64</xloc>
+      <xloc>96</xloc>
       <yloc>160</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>JCR</name>
-    <type>Dummy</type>
+    <name>Get locations</name>
+    <type>GetVariable</type>
     <description/>
     <distribute>N</distribute>
     <custom_distribution/>
@@ -320,17 +374,96 @@ public boolean processRow(StepMetaInterface smi, StepDataInterface sdi) throws K
            <method>none</method>
            <schema_name/>
            </partitioning>
+    <fields>
+      <field>
+        <name>wildcard</name>
+        <variable>.&#x2a;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>608</xloc>
-      <yloc>192</yloc>
+      <xloc>256</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>NormalizePath</name>
-    <type>Janino</type>
+    <name>Group by</name>
+    <type>GroupBy</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <all_rows>N</all_rows>
+      <ignore_aggregate>N</ignore_aggregate>
+      <field_ignore/>
+      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
+      <prefix>grp</prefix>
+      <add_linenr>N</add_linenr>
+      <linenr_fieldname/>
+      <give_back_row>Y</give_back_row>
+      <group>
+      </group>
+      <fields>
+        <field>
+          <aggregate>filter_regex</aggregate>
+          <subject>regex_part</subject>
+          <type>CONCAT_STRING</type>
+          <valuefield>&#x7c;</valuefield>
+        </field>
+      </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>288</xloc>
+      <yloc>160</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>INPUT</name>
+    <type>MappingInput</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>location</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+        <select_unspecified>N</select_unspecified>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>96</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Join&#x3a; location and exclusion list</name>
+    <type>JoinRows</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -339,17 +472,22 @@ public boolean processRow(StepMetaInterface smi, StepDataInterface sdi) throws K
            <method>none</method>
            <schema_name/>
            </partitioning>
-       <formula><field_name>elementPath</field_name>
-<formula_string>org.pentaho.di.core.vfs.KettleVFS.getInstance&#x28;&#x29;.getFileObject&#x28;elementPath&#x29;.toString&#x28;&#x29;</formula_string>
-<value_type>String</value_type>
-<value_length>-1</value_length>
-<value_precision>-1</value_precision>
-<replace_field>elementPath</replace_field>
-</formula>
+      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
+      <prefix>out</prefix>
+      <cache_size>500</cache_size>
+      <main>Group by</main>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue/>
+ <function>&#x3d;</function>
+ <rightvalue/>
+ </condition>
+    </compare>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>672</xloc>
-      <yloc>320</yloc>
+      <xloc>416</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -367,42 +505,48 @@ public boolean processRow(StepMetaInterface smi, StepDataInterface sdi) throws K
            </partitioning>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>960</xloc>
-      <yloc>256</yloc>
+      <xloc>704</xloc>
+      <yloc>352</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Select values</name>
-    <type>SelectValues</type>
+    <name>Sort rows &#x28;left&#x29;</name>
+    <type>SortRows</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>      <field>        <name>elementName</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>uri</name>
-        <rename>elementPath</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
+      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
+      <prefix>out</prefix>
+      <sort_size>1000000</sort_size>
+      <free_memory/>
+      <compress>N</compress>
+      <compress_variable/>
+      <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>filename_without_location</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>768</xloc>
-      <yloc>64</yloc>
+      <xloc>576</xloc>
+      <yloc>352</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Write to log 2</name>
+    <name>Write to log</name>
     <type>WriteToLog</type>
     <description/>
     <distribute>Y</distribute>
@@ -416,25 +560,25 @@ public boolean processRow(StepMetaInterface smi, StepDataInterface sdi) throws K
       <displayHeader>Y</displayHeader>
       <limitRows>N</limitRows>
       <limitRowsNumber>0</limitRowsNumber>
-      <logmessage>_getLocations&#x3a;</logmessage>
+      <logmessage/>
     <fields>
       <field>
-        <name>elementName</name>
+        <name>location</name>
         </field>
       <field>
-        <name>elementPath</name>
+        <name>uri</name>
         </field>
       </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>960</xloc>
-      <yloc>352</yloc>
+      <xloc>704</xloc>
+      <yloc>256</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>append &#x2f;</name>
+    <name>filename_without_location destination</name>
     <type>Janino</type>
     <description/>
     <distribute>N</distribute>
@@ -444,89 +588,17 @@ public boolean processRow(StepMetaInterface smi, StepDataInterface sdi) throws K
            <method>none</method>
            <schema_name/>
            </partitioning>
-       <formula><field_name>elementPath</field_name>
-<formula_string>elementPath.endsWith&#x28;&#x22;&#x2f;&#x22;&#x29;&#x3f;elementPath&#x3a;elementPath&#x2b;&#x22;&#x2f;&#x22;</formula_string>
+       <formula><field_name>filename_without_location</field_name>
+<formula_string>org.pentaho.di.core.vfs.KettleVFS.getInstance&#x28;&#x29;.getFileObject&#x28;filename&#x29;.toString&#x28;&#x29;.substring&#x28;location.length&#x28;&#x29;&#x29;</formula_string>
 <value_type>String</value_type>
 <value_length>-1</value_length>
 <value_precision>-1</value_precision>
-<replace_field>elementPath</replace_field>
+<replace_field/>
 </formula>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>768</xloc>
-      <yloc>256</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>clean path</name>
-    <type>ReplaceString</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>elementPath</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>&#x5c;</replace_string>
-        <replace_by_string>&#x2f;</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-      <field>
-        <in_stream_name>elementPath</in_stream_name>
-        <out_stream_name/>
-        <use_regex>yes</use_regex>
-        <replace_string>&#x2f;&#x24;</replace_string>
-        <replace_by_string/>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>320</xloc>
-      <yloc>160</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>is JCR&#x3f;</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<send_true_to>JCR</send_true_to>
-<send_false_to>Get File Names</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>elementName</leftvalue>
- <function>&#x3d;</function>
- <rightvalue/>
- <value><name>constant</name><type>String</type><text>JCR</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>448</xloc>
-      <yloc>160</yloc>
+      <xloc>416</xloc>
+      <yloc>352</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

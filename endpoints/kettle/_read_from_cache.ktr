@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>previewDifferences</name>
+    <name>read from cache</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -20,11 +20,6 @@
             <description>Y&#x2f;N</description>
         </parameter>
         <parameter>
-            <name>cacheDurationInSeconds</name>
-            <default_value>120</default_value>
-            <description>seconds</description>
-        </parameter>
-        <parameter>
             <name>cpk.plugin.dir</name>
             <default_value>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;</default_value>
             <description/>
@@ -33,36 +28,6 @@
             <name>cpk.solution.system.dir</name>
             <default_value>&#x24;&#x7b;cpk.plugin.dir&#x7d;&#x2f;..</default_value>
             <description/>
-        </parameter>
-        <parameter>
-            <name>delete</name>
-            <default_value>N</default_value>
-            <description>Y&#x2f;N</description>
-        </parameter>
-        <parameter>
-            <name>destinationRepoLocation</name>
-            <default_value>File System</default_value>
-            <description/>
-        </parameter>
-        <parameter>
-            <name>enforceCache</name>
-            <default_value>N</default_value>
-            <description>Y&#x2f;N</description>
-        </parameter>
-        <parameter>
-            <name>originRepoLocation</name>
-            <default_value>JCR</default_value>
-            <description/>
-        </parameter>
-        <parameter>
-            <name>overwrite</name>
-            <default_value>N</default_value>
-            <description>Y&#x2f;N</description>
-        </parameter>
-        <parameter>
-            <name>selectedAction</name>
-            <default_value>S</default_value>
-            <description>S&#x3a; synch &#x7c; E&#x3a; export &#x7c; I&#x3a; import</description>
         </parameter>
     </parameters>
     <log>
@@ -129,13 +94,13 @@
   <notepads>
   </notepads>
   <order>
-  <hop> <from>Generate Rows</from><to>_previewDifferences</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
-  <hop> <from>_previewDifferences</from><to>Select values</to><enabled>Y</enabled> </hop>
+  <hop> <from>count entries 3</from><to>Write to log 5</to><enabled>Y</enabled> </hop>
+  <hop> <from>load from cache</from><to>count entries 3</to><enabled>Y</enabled> </hop>
+  <hop> <from>load from cache</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
   </order>
   <step>
-    <name>Generate Rows</name>
-    <type>RowGenerator</type>
+    <name>OUTPUT</name>
+    <type>RowsToResult</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -144,120 +109,46 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>256</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Write to log 5</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <loglevel>log_level_basic</loglevel>
+      <displayHeader>Y</displayHeader>
+      <limitRows>N</limitRows>
+      <limitRowsNumber>0</limitRowsNumber>
+      <logmessage>Loaded from cache&#x3a;</logmessage>
     <fields>
       <field>
-        <name>line</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <limit>1</limit>
-    <never_ending>N</never_ending>
-    <interval_in_ms>5000</interval_in_ms>
-    <row_time_field>now</row_time_field>
-    <last_time_field>FiveSecondsAgo</last_time_field>
+        <name>N</name>
+        </field>
+      </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>32</xloc>
-      <yloc>64</yloc>
+      <xloc>256</xloc>
+      <yloc>288</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>OUTPUT</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>576</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>_previewDifferences</name>
-    <type>JobExecutor</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <specification_method>filename</specification_method>
-    <job_object_id/>
-    <job_name/>
-    <filename>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;_previewDifferences.kjb</filename>
-    <directory_path/>
-    <group_size>1</group_size>
-    <group_field/>
-    <group_time/>
-          <parameters>       <variablemapping><variable>_cacheFilename</variable><field/><input>&#x24;&#x7b;_cacheFilename&#x7d;</input></variablemapping>
-       <variablemapping><variable>bypassCache</variable><field/><input>&#x24;&#x7b;bypassCache&#x7d;</input></variablemapping>
-       <variablemapping><variable>cacheDurationInSeconds</variable><field/><input>&#x24;&#x7b;cacheDurationInSeconds&#x7d;</input></variablemapping>
-       <variablemapping><variable>cpk.plugin.dir</variable><field/><input>&#x24;&#x7b;cpk.plugin.dir&#x7d;</input></variablemapping>
-       <variablemapping><variable>cpk.solution.system.dir</variable><field/><input>&#x24;&#x7b;cpk.solution.system.dir&#x7d;</input></variablemapping>
-       <variablemapping><variable>delete</variable><field/><input>&#x24;&#x7b;delete&#x7d;</input></variablemapping>
-       <variablemapping><variable>destinationRepoLocation</variable><field/><input>&#x24;&#x7b;destinationRepoLocation&#x7d;</input></variablemapping>
-       <variablemapping><variable>enforceCache</variable><field/><input>&#x24;&#x7b;enforceCache&#x7d;</input></variablemapping>
-       <variablemapping><variable>originRepoLocation</variable><field/><input>&#x24;&#x7b;originRepoLocation&#x7d;</input></variablemapping>
-       <variablemapping><variable>overwrite</variable><field/><input>&#x24;&#x7b;overwrite&#x7d;</input></variablemapping>
-       <variablemapping><variable>selectedAction</variable><field/><input>&#x24;&#x7b;selectedAction&#x7d;</input></variablemapping>
-    <inherit_all_vars>Y</inherit_all_vars>
-    </parameters>
-    <execution_result_target_step/>
-    <execution_time_field>ExecutionTime</execution_time_field>
-    <execution_result_field>ExecutionResult</execution_result_field>
-    <execution_errors_field>ExecutionNrErrors</execution_errors_field>
-    <execution_lines_read_field>ExecutionLinesRead</execution_lines_read_field>
-    <execution_lines_written_field>ExecutionLinesWritten</execution_lines_written_field>
-    <execution_lines_input_field>ExecutionLinesInput</execution_lines_input_field>
-    <execution_lines_output_field>ExecutionLinesOutput</execution_lines_output_field>
-    <execution_lines_rejected_field>ExecutionLinesRejected</execution_lines_rejected_field>
-    <execution_lines_updated_field>ExecutionLinesUpdated</execution_lines_updated_field>
-    <execution_lines_deleted_field>ExecutionLinesDeleted</execution_lines_deleted_field>
-    <execution_files_retrieved_field>ExecutionFilesRetrieved</execution_files_retrieved_field>
-    <execution_exit_status_field>ExecutionExitStatus</execution_exit_status_field>
-    <execution_log_text_field>ExecutionLogText</execution_log_text_field>
-    <execution_log_channelid_field>ExecutionLogChannelId</execution_log_channelid_field>
-    <result_rows_target_step>Select values</result_rows_target_step>
-      <result_rows_field><name>file</name><type>String</type><length>-1</length><precision>-1</precision></result_rows_field>
-      <result_rows_field><name>modification_status</name><type>String</type><length>-1</length><precision>-1</precision></result_rows_field>
-      <result_rows_field><name>source</name><type>String</type><length>-1</length><precision>-1</precision></result_rows_field>
-      <result_rows_field><name>dest</name><type>String</type><length>-1</length><precision>-1</precision></result_rows_field>
-      <result_rows_field><name>type</name><type>String</type><length>-1</length><precision>-1</precision></result_rows_field>
-      <result_rows_field><name>delete_flag</name><type>String</type><length>-1</length><precision>-1</precision></result_rows_field>
-      <result_rows_field><name>overwrite_flag</name><type>String</type><length>-1</length><precision>-1</precision></result_rows_field>
-    <result_files_target_step/>
-    <result_files_file_name_field>FileName</result_files_file_name_field>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>192</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Select values</name>
-    <type>SelectValues</type>
+    <name>count entries 3</name>
+    <type>GroupBy</type>
     <description/>
     <distribute>N</distribute>
     <custom_distribution/>
@@ -266,41 +157,205 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>      <field>        <name>file</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>modification_status</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>dest</name>
-        <rename>direction</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>type</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
+      <all_rows>N</all_rows>
+      <ignore_aggregate>N</ignore_aggregate>
+      <field_ignore/>
+      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
+      <prefix>grp</prefix>
+      <add_linenr>N</add_linenr>
+      <linenr_fieldname/>
+      <give_back_row>N</give_back_row>
+      <group>
+      </group>
+      <fields>
+        <field>
+          <aggregate>N</aggregate>
+          <subject>filename_without_location</subject>
+          <type>COUNT_ALL</type>
+          <valuefield/>
+        </field>
+      </fields>
+     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>416</xloc>
-      <yloc>64</yloc>
+      <xloc>128</xloc>
+      <yloc>288</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>load from cache</name>
+    <type>CsvInput</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <filename>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;&#x24;&#x7b;_cacheFilename&#x7d;</filename>
+    <filename_field>uri</filename_field>
+    <rownum_field/>
+    <include_filename>N</include_filename>
+    <separator>&#x3b;</separator>
+    <enclosure>&#x22;</enclosure>
+    <header>Y</header>
+    <buffer_size>50000</buffer_size>
+    <lazy_conversion>N</lazy_conversion>
+    <add_filename_result>N</add_filename_result>
+    <parallel>N</parallel>
+    <newline_possible>N</newline_possible>
+    <encoding>UTF-8</encoding>
+    <fields>
+      <field>
+        <name>filename_without_location</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>type</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>E_status</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>E_source</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>E_dest</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>S_status</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>S_source</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>S_dest</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>I_status</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>I_source</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>I_dest</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>128</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step_error_handling>
+      <error>
+        <source_step>load from cache</source_step>
+        <target_step>OUTPUT</target_step>
+        <is_enabled>N</is_enabled>
+        <nr_valuename/>
+        <descriptions_valuename/>
+        <fields_valuename/>
+        <codes_valuename/>
+        <max_errors/>
+        <max_pct_errors/>
+        <min_pct_rows/>
+      </error>
   </step_error_handling>
    <slave-step-copy-partition-distribution>
 </slave-step-copy-partition-distribution>
    <slave_transformation>N</slave_transformation>
 <attributes><group><name>DataService</name>
-<attribute><key>name</key>
-<value/>
-</attribute><attribute><key>stepname</key>
-<value/>
-</attribute></group></attributes>
+</group></attributes>
 
 </transformation>

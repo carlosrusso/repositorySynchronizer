@@ -12,6 +12,21 @@
   <modified_date>2013&#x2f;09&#x2f;21 11&#x3a;49&#x3a;22.258</modified_date>
     <parameters>
         <parameter>
+            <name>_cacheFilename</name>
+            <default_value>_cache.csv</default_value>
+            <description>where we store the file listings</description>
+        </parameter>
+        <parameter>
+            <name>bypassCache</name>
+            <default_value>N</default_value>
+            <description>Y&#x2f;N</description>
+        </parameter>
+        <parameter>
+            <name>cacheDurationInSeconds</name>
+            <default_value>120</default_value>
+            <description>seconds</description>
+        </parameter>
+        <parameter>
             <name>cpk.plugin.dir</name>
             <default_value>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;..&#x2f;..</default_value>
             <description/>
@@ -30,6 +45,11 @@
             <name>destinationRepoLocation</name>
             <default_value>File System</default_value>
             <description/>
+        </parameter>
+        <parameter>
+            <name>enforceCache</name>
+            <default_value>N</default_value>
+            <description>Y&#x2f;N</description>
         </parameter>
         <parameter>
             <name>originRepoLocation</name>
@@ -166,7 +186,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>512</xloc>
-      <yloc>64</yloc>
+      <yloc>32</yloc>
       </entry>
     <entry>
       <name>_build_arguments_for_copying_deleting &#x28;delete folders&#x29;</name>
@@ -308,8 +328,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>704</xloc>
-      <yloc>64</yloc>
+      <xloc>736</xloc>
+      <yloc>32</yloc>
       </entry>
     <entry>
       <name>_build_arguments_for_copying_deleting &#x28;copy folders&#x29;</name>
@@ -398,42 +418,68 @@
       <yloc>182</yloc>
       </entry>
     <entry>
-      <name>list_and_compare</name>
+      <name>_previewDifferences.kjb</name>
       <description/>
-      <type>TRANS</type>
+      <type>JOB</type>
       <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;previewDifferences.ktr</filename>
-      <transname/>
+      <job_object_id/>
+      <filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;_previewDifferences.kjb</filename>
+      <jobname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
       <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
       <set_logfile>N</set_logfile>
       <logfile/>
       <logext/>
       <add_date>N</add_date>
       <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
+      <loglevel>Nothing</loglevel>
       <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
       <wait_until_finished>Y</wait_until_finished>
       <follow_abort_remote>N</follow_abort_remote>
+      <expand_remote_job>N</expand_remote_job>
       <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
+      <pass_export>N</pass_export>
+      <force_separate_logging>N</force_separate_logging>
       <parameters>        <pass_all_parameters>Y</pass_all_parameters>
-            <parameter>            <name>cpk.solution.system.dir</name>
+            <parameter>            <name>_cacheFilename</name>
             <stream_name/>
-            <value>&#x24;&#x7b;cpk.solution.system.dir&#x7d;</value>
+            <value>&#x24;&#x7b;_cacheFilename&#x7d;</value>
+            </parameter>            <parameter>            <name>bypassCache</name>
+            <stream_name/>
+            <value>&#x24;&#x7b;bypassCache&#x7d;</value>
+            </parameter>            <parameter>            <name>cacheDurationInSeconds</name>
+            <stream_name/>
+            <value>&#x24;&#x7b;cacheDurationInSeconds&#x7d;</value>
             </parameter>            <parameter>            <name>cpk.plugin.dir</name>
             <stream_name/>
             <value>&#x24;&#x7b;cpk.plugin.dir&#x7d;</value>
-            </parameter>      </parameters>      <parallel>N</parallel>
+            </parameter>            <parameter>            <name>cpk.solution.system.dir</name>
+            <stream_name/>
+            <value>&#x24;&#x7b;cpk.solution.system.dir&#x7d;</value>
+            </parameter>            <parameter>            <name>delete</name>
+            <stream_name/>
+            <value>&#x24;&#x7b;delete&#x7d;</value>
+            </parameter>            <parameter>            <name>destinationRepoLocation</name>
+            <stream_name/>
+            <value>&#x24;&#x7b;destinationRepoLocation&#x7d;</value>
+            </parameter>            <parameter>            <name>enforceCache</name>
+            <stream_name/>
+            <value>&#x24;&#x7b;enforceCache&#x7d;</value>
+            </parameter>            <parameter>            <name>originRepoLocation</name>
+            <stream_name/>
+            <value>&#x24;&#x7b;originRepoLocation&#x7d;</value>
+            </parameter>            <parameter>            <name>overwrite</name>
+            <stream_name/>
+            <value>&#x24;&#x7b;overwrite&#x7d;</value>
+            </parameter>            <parameter>            <name>selectedAction</name>
+            <stream_name/>
+            <value>&#x24;&#x7b;selectedAction&#x7d;</value>
+            </parameter>      </parameters>      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>288</xloc>
+      <xloc>224</xloc>
       <yloc>160</yloc>
       </entry>
   </entries>
@@ -443,7 +489,7 @@
       <to>Delete folders</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -452,7 +498,7 @@
       <to>Delete files</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -461,7 +507,7 @@
       <to>Copy Files</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -484,7 +530,16 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>list_and_compare</from>
+      <from>START</from>
+      <to>_previewDifferences.kjb</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>_previewDifferences.kjb</from>
       <to>_build_arguments_for_copying_deleting &#x28;copy files&#x29;</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -493,7 +548,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>list_and_compare</from>
+      <from>_previewDifferences.kjb</from>
       <to>_build_arguments_for_copying_deleting &#x28;copy folders&#x29;</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -502,7 +557,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>list_and_compare</from>
+      <from>_previewDifferences.kjb</from>
       <to>_build_arguments_for_copying_deleting &#x28;delete files&#x29;</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -511,22 +566,13 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>list_and_compare</from>
+      <from>_previewDifferences.kjb</from>
       <to>_build_arguments_for_copying_deleting &#x28;delete folders&#x29;</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>START</from>
-      <to>list_and_compare</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
     </hop>
   </hops>
   <notepads>
