@@ -15,6 +15,11 @@
             <description/>
         </parameter>
         <parameter>
+            <name>checksumMethod</name>
+            <default_value>MD5</default_value>
+            <description>none, CRC32, MD5, SHA1</description>
+        </parameter>
+        <parameter>
             <name>cpk.plugin.dir</name>
             <default_value>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;</default_value>
             <description/>
@@ -156,8 +161,8 @@
     </notepad>
     <notepad>
       <note>NAMED PARAMETERS&#xa;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#xa;delete &#x28;Y&#x2f;N&#x29;&#xa;selectedAction	S&#x3a; synch &#x7c; E&#x3a; export &#x7c; I&#x3a; import&#xa;&#xa;Internal use&#x3a;&#xa;operation_type P&#x3a;preview &#x28;default&#x29; &#x7c; C&#x3a;copy &#x7c; CF&#x3a; copy folders &#x7c; D&#x3a; delete files &#x7c; DF&#x3a; delete folders &#x7c; M&#x3a; merge&#x28;&#x3f;&#x29;&#xa;&#xa;</note>
-      <xloc>160</xloc>
-      <yloc>960</yloc>
+      <xloc>96</xloc>
+      <yloc>928</yloc>
       <width>448</width>
       <heigth>100</heigth>
       <fontname>Microsoft Sans Serif</fontname>
@@ -195,7 +200,6 @@
   <hop> <from>gen_folder_lines &#x28;if needed&#x29;</from><to>Sync</to><enabled>Y</enabled> </hop>
   <hop> <from>Select values 3</from><to>prepping output</to><enabled>Y</enabled> </hop>
   <hop> <from>prepping output</from><to>Replace in string</to><enabled>Y</enabled> </hop>
-  <hop> <from>not identical</from><to>Get Variables</to><enabled>Y</enabled> </hop>
   <hop> <from>gen_folder_lines &#x28;if needed&#x29; 2</from><to>Export_</to><enabled>Y</enabled> </hop>
   <hop> <from>gen_folder_lines &#x28;if needed&#x29; 2 2</from><to>Import</to><enabled>Y</enabled> </hop>
   <hop> <from>calculate actions&#x3a; entry</from><to>flagfield --&#x3e; status 2</to><enabled>Y</enabled> </hop>
@@ -209,21 +213,36 @@
   <hop> <from>Sort rows 2</from><to>Row denormaliser</to><enabled>Y</enabled> </hop>
   <hop> <from>location &#x3d; jcr</from><to>files at origin</to><enabled>Y</enabled> </hop>
   <hop> <from>location &#x3d; file_system</from><to>files at destination</to><enabled>Y</enabled> </hop>
-  <hop> <from>getLastSynchDate</from><to>join&#x3a; add locations</to><enabled>Y</enabled> </hop>
-  <hop> <from>lk lastmodifiedtime</from><to>Select values</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values</from><to>not identical</to><enabled>Y</enabled> </hop>
   <hop> <from>Get Variables</from><to>lastmodifiedtime to number</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values</from><to>cache diff</to><enabled>N</enabled> </hop>
   <hop> <from>Dummy &#x28;do nothing&#x29;</from><to>location &#x3d; jcr</to><enabled>Y</enabled> </hop>
   <hop> <from>Dummy &#x28;do nothing&#x29;</from><to>location &#x3d; file_system</to><enabled>Y</enabled> </hop>
   <hop> <from>entry</from><to>join&#x3a; add locations</to><enabled>Y</enabled> </hop>
-  <hop> <from>Get origin&#x2f;destination repos</from><to>entry</to><enabled>Y</enabled> </hop>
   <hop> <from>join&#x3a; add locations</from><to>Dummy &#x28;do nothing&#x29;</to><enabled>Y</enabled> </hop>
   <hop> <from>Replace in string</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
   <hop> <from>Group by</from><to>Write to log 3 2</to><enabled>Y</enabled> </hop>
   <hop> <from>write to cache file</from><to>Group by</to><enabled>Y</enabled> </hop>
   <hop> <from>OUTPUT</from><to>Get cache uri</to><enabled>Y</enabled> </hop>
   <hop> <from>Get cache uri</from><to>write to cache file</to><enabled>Y</enabled> </hop>
+  <hop> <from>lk lastmodifiedtime</from><to>not identical</to><enabled>Y</enabled> </hop>
+  <hop> <from>not identical</from><to>Select values</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select values</from><to>Get Variables</to><enabled>Y</enabled> </hop>
+  <hop> <from>lk lastmodifiedtime</from><to>cache diff</to><enabled>N</enabled> </hop>
+  <hop> <from>apparently identical</from><to>Write to log 4</to><enabled>N</enabled> </hop>
+  <hop> <from>getLastSynchDate</from><to>Get origin&#x2f;destination repos</to><enabled>Y</enabled> </hop>
+  <hop> <from>Get origin&#x2f;destination repos</from><to>entry</to><enabled>Y</enabled> </hop>
+  <hop> <from>checksum FS</from><to>Merge Rows &#x28;diff&#x29; 2</to><enabled>Y</enabled> </hop>
+  <hop> <from>checksum JCR</from><to>Merge Rows &#x28;diff&#x29; 2</to><enabled>Y</enabled> </hop>
+  <hop> <from>location&#x3a; JCR</from><to>checksum JCR</to><enabled>Y</enabled> </hop>
+  <hop> <from>location&#x3a; FS</from><to>checksum FS</to><enabled>Y</enabled> </hop>
+  <hop> <from>apparently identical</from><to>Select values 2</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select values 2</from><to>location&#x3a; JCR</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select values 2</from><to>location&#x3a; FS</to><enabled>Y</enabled> </hop>
+  <hop> <from>Merge Rows &#x28;diff&#x29; 2</from><to>not identical 2</to><enabled>Y</enabled> </hop>
+  <hop> <from>not identical 2</from><to>Select values 4</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select values 4</from><to>Get Variables</to><enabled>Y</enabled> </hop>
+  <hop> <from>not identical</from><to>apparently identical</to><enabled>Y</enabled> </hop>
+  <hop> <from>not identical 2</from><to>ignore</to><enabled>Y</enabled> </hop>
+  <hop> <from>Merge Rows &#x28;diff&#x29; 2</from><to>Write to log 4 2</to><enabled>N</enabled> </hop>
   </order>
   <step>
     <name>Dummy &#x28;do nothing&#x29;</name>
@@ -372,7 +391,7 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>704</xloc>
+      <xloc>800</xloc>
       <yloc>1088</yloc>
       <draw>Y</draw>
       </GUI>
@@ -417,8 +436,8 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>1408</xloc>
-      <yloc>1088</yloc>
+      <xloc>1440</xloc>
+      <yloc>1120</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -543,8 +562,8 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>992</xloc>
-      <yloc>832</yloc>
+      <xloc>1280</xloc>
+      <yloc>640</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -592,8 +611,8 @@
       </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>1478</xloc>
-      <yloc>1022</yloc>
+      <xloc>1536</xloc>
+      <yloc>1024</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -864,7 +883,7 @@
     </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>800</xloc>
-      <yloc>800</yloc>
+      <yloc>992</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -1143,8 +1162,8 @@
       </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>992</xloc>
-      <yloc>928</yloc>
+      <xloc>1280</xloc>
+      <yloc>736</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -1320,8 +1339,8 @@
       </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>1478</xloc>
-      <yloc>926</yloc>
+      <xloc>1536</xloc>
+      <yloc>928</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -1432,8 +1451,8 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>896</xloc>
-      <yloc>768</yloc>
+      <xloc>928</xloc>
+      <yloc>704</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -1824,8 +1843,8 @@
     <allow_multiple_output>N</allow_multiple_output>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>352</xloc>
-      <yloc>576</yloc>
+      <xloc>32</xloc>
+      <yloc>640</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -2051,8 +2070,8 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-<send_true_to/>
-<send_false_to/>
+<send_true_to>Select values</send_true_to>
+<send_false_to>apparently identical</send_false_to>
     <compare>
 <condition>
  <negated>N</negated>
@@ -2332,8 +2351,494 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>1376</xloc>
+      <xloc>1536</xloc>
+      <yloc>1120</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>apparently identical</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>928</xloc>
+      <yloc>896</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>checksum FS</name>
+    <type>Mapping</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <specification_method>filename</specification_method>
+    <trans_object_id/>
+    <trans_name/>
+    <filename>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;_checksum.ktr</filename>
+    <directory_path/>
+    <mappings>
+      <input>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>Y</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+       <connector><parent>filename_without_location</parent><child>filename_without_location</child></connector>
+       <connector><parent>location</parent><child>location</child></connector>
+       <connector><parent>type</parent><child>type</child></connector>
+    </mapping>      </input>
+      <output>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>Y</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+    </mapping>      </output>
+          <parameters>       <variablemapping><variable>cpk.plugin.dir</variable><input>&#x24;&#x7b;cpk.plugin.dir&#x7d;</input></variablemapping>
+       <variablemapping><variable>cpk.solution.system.dir</variable><input>&#x24;&#x7b;cpk.solution.system.dir&#x7d;</input></variablemapping>
+       <variablemapping><variable>checksumMethod</variable><input>&#x24;&#x7b;checksumMethod&#x7d;</input></variablemapping>
+    <inherit_all_vars>N</inherit_all_vars>
+    </parameters>
+    </mappings>
+    <allow_multiple_input>N</allow_multiple_input>
+    <allow_multiple_output>N</allow_multiple_output>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1248</xloc>
+      <yloc>928</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Write to log 4</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <loglevel>log_level_basic</loglevel>
+      <displayHeader>Y</displayHeader>
+      <limitRows>N</limitRows>
+      <limitRowsNumber>0</limitRowsNumber>
+      <logmessage/>
+    <fields>
+      <field>
+        <name>filter_regex</name>
+        </field>
+      <field>
+        <name>jcr</name>
+        </field>
+      <field>
+        <name>file_system</name>
+        </field>
+      <field>
+        <name>last_synch</name>
+        </field>
+      <field>
+        <name>originRepo</name>
+        </field>
+      <field>
+        <name>destinationRepo</name>
+        </field>
+      <field>
+        <name>location</name>
+        </field>
+      <field>
+        <name>wildcard</name>
+        </field>
+      <field>
+        <name>filename</name>
+        </field>
+      <field>
+        <name>short_filename</name>
+        </field>
+      <field>
+        <name>path</name>
+        </field>
+      <field>
+        <name>type</name>
+        </field>
+      <field>
+        <name>exists</name>
+        </field>
+      <field>
+        <name>ishidden</name>
+        </field>
+      <field>
+        <name>isreadable</name>
+        </field>
+      <field>
+        <name>iswriteable</name>
+        </field>
+      <field>
+        <name>lastmodifiedtime</name>
+        </field>
+      <field>
+        <name>size</name>
+        </field>
+      <field>
+        <name>extension</name>
+        </field>
+      <field>
+        <name>uri</name>
+        </field>
+      <field>
+        <name>rooturi</name>
+        </field>
+      <field>
+        <name>filename_without_location</name>
+        </field>
+      <field>
+        <name>flagfield</name>
+        </field>
+      <field>
+        <name>lastmodifiedtime_origin</name>
+        </field>
+      </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>928</xloc>
+      <yloc>800</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>checksum JCR</name>
+    <type>Mapping</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <specification_method>filename</specification_method>
+    <trans_object_id/>
+    <trans_name/>
+    <filename>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;_checksum.ktr</filename>
+    <directory_path/>
+    <mappings>
+      <input>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>Y</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+       <connector><parent>filename_without_location</parent><child>filename_without_location</child></connector>
+       <connector><parent>location</parent><child>location</child></connector>
+       <connector><parent>type</parent><child>type</child></connector>
+    </mapping>      </input>
+      <output>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>Y</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+    </mapping>      </output>
+          <parameters>       <variablemapping><variable>cpk.plugin.dir</variable><input>&#x24;&#x7b;cpk.plugin.dir&#x7d;</input></variablemapping>
+       <variablemapping><variable>cpk.solution.system.dir</variable><input>&#x24;&#x7b;cpk.solution.system.dir&#x7d;</input></variablemapping>
+       <variablemapping><variable>checksumMethod</variable><input>&#x24;&#x7b;checksumMethod&#x7d;</input></variablemapping>
+    <inherit_all_vars>N</inherit_all_vars>
+    </parameters>
+    </mappings>
+    <allow_multiple_input>N</allow_multiple_input>
+    <allow_multiple_output>N</allow_multiple_output>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1248</xloc>
+      <yloc>864</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Merge Rows &#x28;diff&#x29; 2</name>
+    <type>MergeRows</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <keys>
+      <key>filename_without_location</key>
+    </keys>
+    <values>
+      <value>checksum</value>
+    </values>
+<flag_field>flagfield</flag_field>
+<reference>checksum JCR</reference>
+<compare>checksum FS</compare>
+    <compare>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1344</xloc>
+      <yloc>896</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>location&#x3a; JCR</name>
+    <type>Janino</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+       <formula><field_name>location</field_name>
+<formula_string>jcr</formula_string>
+<value_type>String</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<replace_field/>
+</formula>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1120</xloc>
+      <yloc>864</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>location&#x3a; FS</name>
+    <type>Janino</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+       <formula><field_name>location</field_name>
+<formula_string>file_system</formula_string>
+<value_type>String</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<replace_field/>
+</formula>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1120</xloc>
+      <yloc>928</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select values 2</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>jcr</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>file_system</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>last_synch</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>originRepo</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>destinationRepo</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>type</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>lastmodifiedtime</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>size</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>filename_without_location</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>lastmodifiedtime_origin</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1024</xloc>
+      <yloc>896</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>not identical 2</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Select values 4</send_true_to>
+<send_false_to>ignore</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>flagfield</leftvalue>
+ <function>&#x3c;&#x3e;</function>
+ <rightvalue/>
+ <value><name>constant</name><type>String</type><text>identical</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1344</xloc>
+      <yloc>1088</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select values 4</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>type</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>filename_without_location</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>flagfield</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>lastmodifiedtime_origin</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>lastmodifiedtime</name>
+        <rename>lastmodifiedtime_destination</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>last_synch</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1024</xloc>
+      <yloc>1088</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>ignore</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1216</xloc>
       <yloc>1024</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Write to log 4 2</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <loglevel>log_level_basic</loglevel>
+      <displayHeader>Y</displayHeader>
+      <limitRows>N</limitRows>
+      <limitRowsNumber>0</limitRowsNumber>
+      <logmessage/>
+    <fields>
+      <field>
+        <name>filename_without_location</name>
+        </field>
+      <field>
+        <name>checksum</name>
+        </field>
+      <field>
+        <name>flagfield</name>
+        </field>
+      </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1408</xloc>
+      <yloc>832</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -2344,6 +2849,10 @@
 </slave-step-copy-partition-distribution>
    <slave_transformation>N</slave_transformation>
 <attributes><group><name>DataService</name>
-</group></attributes>
+<attribute><key>name</key>
+<value/>
+</attribute><attribute><key>stepname</key>
+<value/>
+</attribute></group></attributes>
 
 </transformation>

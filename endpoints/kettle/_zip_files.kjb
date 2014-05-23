@@ -12,11 +12,6 @@
   <modified_date>2013&#x2f;09&#x2f;21 11&#x3a;49&#x3a;22.258</modified_date>
     <parameters>
         <parameter>
-            <name>bypassCache</name>
-            <default_value>N</default_value>
-            <description/>
-        </parameter>
-        <parameter>
             <name>cpk.plugin.dir</name>
             <default_value>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;..&#x2f;..</default_value>
             <description/>
@@ -27,34 +22,9 @@
             <description/>
         </parameter>
         <parameter>
-            <name>delete</name>
-            <default_value>N</default_value>
-            <description>Y&#x2f;N</description>
-        </parameter>
-        <parameter>
-            <name>destinationRepoLocation</name>
-            <default_value>JCR</default_value>
+            <name>staging_folder</name>
+            <default_value>&#x24;&#x7b;cpk.solution.system.dir&#x7d;&#x2f;repositorySynchronizer&#x2f;staging</default_value>
             <description/>
-        </parameter>
-        <parameter>
-            <name>enforceCache</name>
-            <default_value>N</default_value>
-            <description/>
-        </parameter>
-        <parameter>
-            <name>originRepoLocation</name>
-            <default_value>File System</default_value>
-            <description/>
-        </parameter>
-        <parameter>
-            <name>overwrite</name>
-            <default_value>N</default_value>
-            <description>Y&#x2f;N</description>
-        </parameter>
-        <parameter>
-            <name>selectedAction</name>
-            <default_value>S</default_value>
-            <description>S&#x3a; synch &#x7c; E&#x3a; export &#x7c; I&#x3a; import</description>
         </parameter>
     </parameters>
     <slaveservers>
@@ -107,123 +77,92 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>109</xloc>
-      <yloc>108</yloc>
+      <xloc>64</xloc>
+      <yloc>64</yloc>
       </entry>
     <entry>
-      <name>previewDiffAndSynch</name>
+      <name>Zip file</name>
       <description/>
-      <type>JOB</type>
-      <specification_method>filename</specification_method>
-      <job_object_id/>
-      <filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;_previewDiffAndSynch.kjb</filename>
-      <jobname/>
+      <type>ZIP_FILE</type>
+      <zipfilename>&#x24;&#x7b;staging_folder&#x7d;&#x2f;upload.zip</zipfilename>
+      <compressionrate>3</compressionrate>
+      <ifzipfileexists>0</ifzipfileexists>
+      <wildcard>.&#x2a;</wildcard>
+      <wildcardexclude/>
+      <sourcedirectory>&#x24;&#x7b;staging_folder&#x7d;&#x2f;files</sourcedirectory>
+      <movetodirectory/>
+      <afterzip>0</afterzip>
+      <addfiletoresult>Y</addfiletoresult>
+      <isfromprevious>N</isfromprevious>
+      <createparentfolder>Y</createparentfolder>
+      <adddate>N</adddate>
+      <addtime>N</addtime>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <createMoveToDirectory>N</createMoveToDirectory>
+      <include_subfolders>Y</include_subfolders>
+      <stored_source_path_depth>1 &#x3a; file.txt</stored_source_path_depth>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>576</xloc>
+      <yloc>64</yloc>
+      </entry>
+    <entry>
+      <name>Delete staging folder</name>
+      <description/>
+      <type>DELETE_FOLDERS</type>
       <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Nothing</loglevel>
-      <slave_server_name/>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <expand_remote_job>N</expand_remote_job>
-      <create_parent_folder>N</create_parent_folder>
-      <pass_export>N</pass_export>
-      <force_separate_logging>N</force_separate_logging>
-      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
-            <parameter>            <name>cpk.solution.system.dir</name>
-            <stream_name/>
-            <value>&#x24;&#x7b;cpk.solution.system.dir&#x7d;</value>
-            </parameter>            <parameter>            <name>cpk.plugin.dir</name>
-            <stream_name/>
-            <value>&#x24;&#x7b;cpk.plugin.dir&#x7d;</value>
-            </parameter>      </parameters>      <set_append_logfile>N</set_append_logfile>
+      <success_condition>success_if_errors_less</success_condition>
+      <limit_folders>2</limit_folders>
+      <fields>
+        <field>
+          <name>&#x24;&#x7b;staging_folder&#x7d;</name>
+        </field>
+      </fields>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>287</xloc>
-      <yloc>108</yloc>
+      <xloc>192</xloc>
+      <yloc>64</yloc>
       </entry>
     <entry>
-      <name>LastSynchDate &#x3d; now</name>
+      <name>Create a folder</name>
       <description/>
-      <type>TRANS</type>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;_setLastSynchDate.ktr</filename>
-      <transname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
-      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
-            <parameter>            <name>cpk.solution.system.dir</name>
-            <stream_name/>
-            <value>&#x24;&#x7b;cpk.solution.system.dir&#x7d;</value>
-            </parameter>            <parameter>            <name>cpk.plugin.dir</name>
-            <stream_name/>
-            <value>&#x24;&#x7b;cpk.plugin.dir&#x7d;</value>
-            </parameter>      </parameters>      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>643</xloc>
-      <yloc>108</yloc>
-      </entry>
-    <entry>
-      <name>Is synch&#x3f;</name>
-      <description/>
-      <type>SIMPLE_EVAL</type>
-      <valuetype>variable</valuetype>
-      <fieldname/>
-      <variablename>&#x24;&#x7b;selectedAction&#x7d;</variablename>
-      <fieldtype>string</fieldtype>
-      <mask/>
-      <comparevalue>S</comparevalue>
-      <minvalue/>
-      <maxvalue/>
-      <successcondition>equal</successcondition>
-      <successnumbercondition>equal</successnumbercondition>
-      <successbooleancondition>false</successbooleancondition>
-      <successwhenvarset>N</successwhenvarset>
+      <type>CREATE_FOLDER</type>
+      <foldername>&#x24;&#x7b;staging_folder&#x7d;&#x2f;files</foldername>
+      <fail_of_folder_exists>N</fail_of_folder_exists>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>465</xloc>
-      <yloc>108</yloc>
+      <xloc>320</xloc>
+      <yloc>64</yloc>
       </entry>
     <entry>
-      <name>Success</name>
+      <name>Copy Files</name>
       <description/>
-      <type>SUCCESS</type>
+      <type>COPY_FILES</type>
+      <copy_empty_folders>Y</copy_empty_folders>
+      <arg_from_previous>Y</arg_from_previous>
+      <overwrite_files>N</overwrite_files>
+      <include_subfolders>Y</include_subfolders>
+      <remove_source_files>N</remove_source_files>
+      <add_result_filesname>N</add_result_filesname>
+      <destination_is_a_file>N</destination_is_a_file>
+      <create_destination_folder>Y</create_destination_folder>
+      <fields>
+      </fields>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>640</xloc>
-      <yloc>192</yloc>
+      <xloc>416</xloc>
+      <yloc>64</yloc>
       </entry>
   </entries>
   <hops>
     <hop>
       <from>START</from>
-      <to>previewDiffAndSynch</to>
+      <to>Delete staging folder</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -231,30 +170,30 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>previewDiffAndSynch</from>
-      <to>Is synch&#x3f;</to>
+      <from>Delete staging folder</from>
+      <to>Create a folder</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
+      <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Is synch&#x3f;</from>
-      <to>LastSynchDate &#x3d; now</to>
+      <from>Create a folder</from>
+      <to>Copy Files</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
+      <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Is synch&#x3f;</from>
-      <to>Success</to>
+      <from>Copy Files</from>
+      <to>Zip file</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
-      <evaluation>N</evaluation>
+      <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
   </hops>

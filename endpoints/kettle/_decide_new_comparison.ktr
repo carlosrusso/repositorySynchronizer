@@ -599,7 +599,7 @@
            <schema_name/>
            </partitioning>
        <formula><field_name>recalculate</field_name>
-<formula_string>&#x21;&#x21;enforceCache&#x3f; &#x28;1&#x3d;&#x3d;0&#x29; &#x3a; &#x28; &#x28;&#x21;&#x21;bypassCache&#x29; &#x7c;&#x7c; &#x28;&#x21;exists&#x29; &#x7c;&#x7c; &#x28;size &#x3c; 120&#x29; &#x7c;&#x7c; &#x28;time_elapsed &#x3e; cache_duration_s&#x2a;1000&#x29; &#x29;</formula_string>
+<formula_string>&#x28;&#x21;&#x21;enforceCache&#x29;&#x3f; &#x28;1&#x3d;&#x3d;0&#x29; &#x3a; &#x28; &#x28;&#x21;&#x21;bypassCache&#x29; &#x7c;&#x7c; &#x28;&#x21;exists&#x29; &#x7c;&#x7c; &#x28;size &#x3c; 120&#x29; &#x7c;&#x7c; &#x28;time_elapsed &#x3e; cache_duration_s&#x2a;1000&#x29; &#x29;</formula_string>
 <value_type>Boolean</value_type>
 <value_length>-1</value_length>
 <value_precision>-1</value_precision>
@@ -678,10 +678,6 @@
 </slave-step-copy-partition-distribution>
    <slave_transformation>N</slave_transformation>
 <attributes><group><name>DataService</name>
-<attribute><key>name</key>
-<value/>
-</attribute><attribute><key>stepname</key>
-<value/>
-</attribute></group></attributes>
+</group></attributes>
 
 </transformation>

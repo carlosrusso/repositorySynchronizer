@@ -27,6 +27,11 @@
             <description>seconds</description>
         </parameter>
         <parameter>
+            <name>checksumMethod</name>
+            <default_value>none</default_value>
+            <description/>
+        </parameter>
+        <parameter>
             <name>cpk.plugin.dir</name>
             <default_value>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;</default_value>
             <description/>
@@ -219,6 +224,9 @@
             </parameter>            <parameter>            <name>selectedAction</name>
             <stream_name/>
             <value>&#x24;&#x7b;selectedAction&#x7d;</value>
+            </parameter>            <parameter>            <name>checksumMethod</name>
+            <stream_name/>
+            <value>&#x24;&#x7b;checksumMethod&#x7d;</value>
             </parameter>      </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
