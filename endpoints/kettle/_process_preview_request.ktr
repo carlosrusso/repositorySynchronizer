@@ -61,7 +61,7 @@
         </parameter>
         <parameter>
             <name>selectedAction</name>
-            <default_value>S</default_value>
+            <default_value>I</default_value>
             <description>S&#x3a; synch &#x7c; E&#x3a; export &#x7c; I&#x3a; import</description>
         </parameter>
     </parameters>
@@ -129,25 +129,76 @@
   <notepads>
   </notepads>
   <order>
-  <hop> <from>Get selectedAction</from><to>Switch &#x2f; Case</to><enabled>Y</enabled> </hop>
   <hop> <from>Switch &#x2f; Case</from><to>None of these</to><enabled>Y</enabled> </hop>
-  <hop> <from>Switch &#x2f; Case</from><to>Synch</to><enabled>Y</enabled> </hop>
-  <hop> <from>Switch &#x2f; Case</from><to>Export</to><enabled>Y</enabled> </hop>
-  <hop> <from>Switch &#x2f; Case</from><to>Import</to><enabled>Y</enabled> </hop>
-  <hop> <from>Import</from><to>List</to><enabled>Y</enabled> </hop>
-  <hop> <from>Export</from><to>List</to><enabled>Y</enabled> </hop>
-  <hop> <from>Synch</from><to>List</to><enabled>Y</enabled> </hop>
   <hop> <from>remove nothing_to_be_updated</from><to>delete filter</to><enabled>Y</enabled> </hop>
-  <hop> <from>List</from><to>Get Variables 2</to><enabled>Y</enabled> </hop>
-  <hop> <from>Get Variables 2</from><to>remove nothing_to_be_updated</to><enabled>Y</enabled> </hop>
-  <hop> <from>delete filter</from><to>end of filters</to><enabled>Y</enabled> </hop>
-  <hop> <from>Get rows from result</from><to>Get selectedAction</to><enabled>Y</enabled> </hop>
-  <hop> <from>end of filters</from><to>OUTPUT 3</to><enabled>Y</enabled> </hop>
-  <hop> <from>end of filters</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
+  <hop> <from>Synchronize</from><to>gen_folder_lines &#x28;if needed&#x29; Sync</to><enabled>Y</enabled> </hop>
+  <hop> <from>Export&#x3a; flagfield --&#x3e; status</from><to>source&#x26;dest</to><enabled>Y</enabled> </hop>
+  <hop> <from>Import&#x3a; flagfield --&#x3e; status</from><to>source&#x26;dest 2</to><enabled>Y</enabled> </hop>
+  <hop> <from>source&#x26;dest</from><to>gen_folder_lines &#x28;if needed&#x29; Export</to><enabled>Y</enabled> </hop>
+  <hop> <from>source&#x26;dest 2</from><to>gen_folder_lines &#x28;if needed&#x29; Import</to><enabled>Y</enabled> </hop>
+  <hop> <from>Switch &#x2f; Case</from><to>Synchronize</to><enabled>Y</enabled> </hop>
+  <hop> <from>Switch &#x2f; Case</from><to>Export&#x3a; flagfield --&#x3e; status</to><enabled>Y</enabled> </hop>
+  <hop> <from>Switch &#x2f; Case</from><to>Import&#x3a; flagfield --&#x3e; status</to><enabled>Y</enabled> </hop>
+  <hop> <from>gen_folder_lines &#x28;if needed&#x29; Sync</from><to>List</to><enabled>Y</enabled> </hop>
+  <hop> <from>gen_folder_lines &#x28;if needed&#x29; Export</from><to>List</to><enabled>Y</enabled> </hop>
+  <hop> <from>gen_folder_lines &#x28;if needed&#x29; Import</from><to>List</to><enabled>Y</enabled> </hop>
+  <hop> <from>join</from><to>Get variables</to><enabled>Y</enabled> </hop>
+  <hop> <from>OUTPUT</from><to>Write to log 2</to><enabled>N</enabled> </hop>
+  <hop> <from>Get variables</from><to>int&#x28;timestamp&#x29;</to><enabled>Y</enabled> </hop>
+  <hop> <from>int&#x28;timestamp&#x29;</from><to>Switch &#x2f; Case</to><enabled>Y</enabled> </hop>
+  <hop> <from>int&#x28;timestamp&#x29;</from><to>Write to log</to><enabled>N</enabled> </hop>
+  <hop> <from>Detect empty stream</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
+  <hop> <from>Dummy &#x28;do nothing&#x29;</from><to>Detect empty stream</to><enabled>Y</enabled> </hop>
+  <hop> <from>Dummy &#x28;do nothing&#x29;</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
+  <hop> <from>Get rows from result</from><to>entry point</to><enabled>Y</enabled> </hop>
+  <hop> <from>entry point</from><to>join</to><enabled>Y</enabled> </hop>
+  <hop> <from>getLastSynchDate</from><to>join</to><enabled>Y</enabled> </hop>
+  <hop> <from>List</from><to>remove nothing_to_be_updated</to><enabled>Y</enabled> </hop>
+  <hop> <from>delete filter</from><to>select</to><enabled>Y</enabled> </hop>
+  <hop> <from>select</from><to>Dummy &#x28;do nothing&#x29;</to><enabled>Y</enabled> </hop>
+  <hop> <from>List</from><to>Write to log 3</to><enabled>N</enabled> </hop>
   </order>
   <step>
-    <name>Export</name>
-    <type>SelectValues</type>
+    <name>Detect empty stream</name>
+    <type>DetectEmptyStream</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1600</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Dummy &#x28;do nothing&#x29;</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1440</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get rows from result</name>
+    <type>RowsFromResult</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -157,36 +208,35 @@
            <schema_name/>
            </partitioning>
     <fields>      <field>        <name>filename_without_location</name>
-        <rename>file</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>E_status</name>
-        <rename>modification_status</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>E_source</name>
-        <rename>source</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>E_dest</name>
-        <rename>dest</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>type</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        </field>      <field>        <name>type</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        </field>      <field>        <name>flagfield</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        </field>      <field>        <name>lastmodifiedtime_origin</name>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        </field>      <field>        <name>lastmodifiedtime_destination</name>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        </field>      </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>544</xloc>
-      <yloc>256</yloc>
+      <xloc>64</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Get Variables 2</name>
+    <name>Get variables</name>
     <type>GetVariable</type>
     <description/>
     <distribute>N</distribute>
@@ -197,6 +247,18 @@
            <schema_name/>
            </partitioning>
     <fields>
+      <field>
+        <name>selectedAction</name>
+        <variable>&#x24;&#x7b;selectedAction&#x7d;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
       <field>
         <name>delete_flag</name>
         <variable>&#x24;&#x7b;delete&#x7d;</variable>
@@ -221,93 +283,21 @@
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>736</xloc>
-      <yloc>256</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get rows from result</name>
-    <type>RowsFromResult</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>      <field>        <name>filename_without_location</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        </field>      <field>        <name>type</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        </field>      <field>        <name>E_status</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        </field>      <field>        <name>E_source</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        </field>      <field>        <name>E_dest</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        </field>      <field>        <name>S_status</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        </field>      <field>        <name>S_source</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        </field>      <field>        <name>S_dest</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        </field>      <field>        <name>I_status</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        </field>      <field>        <name>I_source</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        </field>      <field>        <name>I_dest</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        </field>      </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>96</xloc>
-      <yloc>256</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get selectedAction</name>
-    <type>GetVariable</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
       <field>
-        <name>selectedAction</name>
-        <variable>&#x24;&#x7b;selectedAction&#x7d;</variable>
+        <name>originRepo</name>
+        <variable>&#x24;&#x7b;originRepoLocation&#x7d;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>destinationRepo</name>
+        <variable>&#x24;&#x7b;destinationRepoLocation&#x7d;</variable>
         <type>String</type>
         <format/>
         <currency/>
@@ -320,48 +310,8 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>256</xloc>
+      <xloc>288</xloc>
       <yloc>256</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Import</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>      <field>        <name>filename_without_location</name>
-        <rename>file</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>I_status</name>
-        <rename>modification_status</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>I_source</name>
-        <rename>source</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>I_dest</name>
-        <rename>dest</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>type</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>544</xloc>
-      <yloc>352</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -370,7 +320,7 @@
     <name>List</name>
     <type>Dummy</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
          <partitioning>
@@ -379,7 +329,7 @@
            </partitioning>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>640</xloc>
+      <xloc>1088</xloc>
       <yloc>256</yloc>
       <draw>Y</draw>
       </GUI>
@@ -398,7 +348,7 @@
            </partitioning>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>416</xloc>
+      <xloc>480</xloc>
       <yloc>128</yloc>
       <draw>Y</draw>
       </GUI>
@@ -406,25 +356,6 @@
 
   <step>
     <name>OUTPUT</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>1312</xloc>
-      <yloc>384</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>OUTPUT 3</name>
     <type>RowsToResult</type>
     <description/>
     <distribute>Y</distribute>
@@ -436,8 +367,8 @@
            </partitioning>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>1312</xloc>
-      <yloc>320</yloc>
+      <xloc>1536</xloc>
+      <yloc>544</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -461,22 +392,22 @@
 <case_value_group/>
 <default_target_step>None of these</default_target_step>
 <cases><case><value>S</value>
-<target_step>Synch</target_step>
+<target_step>Synchronize</target_step>
 </case><case><value>E</value>
-<target_step>Export</target_step>
+<target_step>Export&#x3a; flagfield --&#x3e; status</target_step>
 </case><case><value>I</value>
-<target_step>Import</target_step>
+<target_step>Import&#x3a; flagfield --&#x3e; status</target_step>
 </case></cases>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>416</xloc>
+      <xloc>480</xloc>
       <yloc>256</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Synch</name>
-    <type>SelectValues</type>
+    <name>Synchronize</name>
+    <type>ScriptValueMod</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -485,31 +416,174 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>      <field>        <name>filename_without_location</name>
-        <rename>file</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>S_status</name>
-        <rename>modification_status</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>S_source</name>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var status&#x3b;&#xa;var source&#x3b;&#xa;var dest&#x3b;&#xa;&#xa;status &#x3d; &#x27;nothing_to_be_updated&#x27;&#x3b;&#xa;source &#x3d; &#x27;&#x27;&#x3b;&#xa;dest &#x3d; &#x27;&#x27;&#x3b;&#xa;&#xa;var jcr &#x3d; originRepo&#x3b;&#xa;var fs &#x3d; destinationRepo&#x3b;&#xa;source&#x3d;jcr&#x3b;&#xa;dest&#x3d;fs&#x3b;&#xa;&#xa;if &#x28;flagfield &#x3d;&#x3d;&#x22;new&#x22;&#x29; &#x7b;&#xa;	if &#x28;&#x28;lastmodifiedtime_destination &#x3c; last_synch&#x29; &#x26;&#x26; &#x28;delete_flag &#x3d;&#x3d; &#x27;Y&#x27;&#x29;&#x29; &#x7b; status &#x3d; &#x27;to_be_deleted&#x27;&#x3b; source &#x3d; jcr&#x3b; dest &#x3d; fs&#x3b;&#x7d;&#xa;	if &#x28;lastmodifiedtime_destination &#x3e; last_synch&#x29; &#x7b; status &#x3d; &#x27;to_be_copied&#x27;&#x3b; source &#x3d; fs&#x3b; dest &#x3d; jcr&#x3b;&#x7d;&#xa;&#x7d; else if &#x28;flagfield &#x3d;&#x3d; &#x22;deleted&#x22;&#x29; &#x7b;&#xa;	if &#x28;&#x28;lastmodifiedtime_origin &#x3c; last_synch&#x29; &#x26;&#x26; &#x28;delete_flag &#x3d;&#x3d; &#x27;Y&#x27;&#x29;&#x29; &#x7b; status &#x3d; &#x27;to_be_deleted&#x27;&#x3b; source &#x3d; fs&#x3b; dest &#x3d; jcr&#x3b;&#x7d;&#xa;	if &#x28;lastmodifiedtime_origin &#x3e; last_synch&#x29; &#x7b; status &#x3d; &#x27;to_be_copied&#x27;&#x3b; source &#x3d; jcr&#x3b; dest &#x3d; fs&#x3b;&#x7d;&#xa;&#x7d; else if &#x28;flagfield &#x3d;&#x3d; &#x22;changed&#x22;&#x29; &#x7b;&#xa;	if &#x28;&#x28;lastmodifiedtime_origin &#x3c; last_synch&#x29; &#x26;&#x26; &#x28;lastmodifiedtime_destination &#x3e; last_synch&#x29;&#x29; &#x7b; status &#x3d; &#x27;to_be_copied&#x27;&#x3b; source &#x3d; fs&#x3b; dest &#x3d; jcr&#x3b;&#x7d;&#xa;	if &#x28;&#x28;lastmodifiedtime_origin &#x3e; last_synch&#x29; &#x26;&#x26; &#x28;lastmodifiedtime_destination &#x3c; last_synch&#x29;&#x29; &#x7b; status &#x3d; &#x27;to_be_copied&#x27;&#x3b; source &#x3d; jcr&#x3b; dest &#x3d; fs&#x3b;&#x7d;&#xa;&#xa;	if &#x28;&#x28;lastmodifiedtime_origin &#x3e; last_synch&#x29; &#x26;&#x26; &#x28;lastmodifiedtime_destination &#x3e; last_synch&#x29; &#x26;&#x26; &#x28;overwrite_flag &#x3d;&#x3d; &#x22;Y&#x22;&#x29;&#x29; &#x7b;&#xa;		status &#x3d; &#x27;to_be_copied&#x27;&#x3b;&#xa;		if &#x28;lastmodifiedtime_origin &#x3e; lastmodifiedtime_destination&#x29; &#x7b; source &#x3d; jcr&#x3b; dest &#x3d; fs&#x3b;&#x7d;&#xa;		else &#x7b; source &#x3d; fs&#x3b; dest &#x3d; jcr&#x3b;&#x7d;&#xa;		&#x7d;&#xa;&#x7d;&#xa;&#xa;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>status</name>
+        <rename>status</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>source</name>
         <rename>source</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>S_dest</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>dest</name>
         <rename>dest</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>type</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>544</xloc>
-      <yloc>160</yloc>
+      <xloc>640</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Write to log</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <loglevel>log_level_basic</loglevel>
+      <displayHeader>Y</displayHeader>
+      <limitRows>N</limitRows>
+      <limitRowsNumber>0</limitRowsNumber>
+      <logmessage>process preview request</logmessage>
+    <fields>
+      <field>
+        <name>last_synch</name>
+        </field>
+      <field>
+        <name>filename_without_location</name>
+        </field>
+      <field>
+        <name>type</name>
+        </field>
+      <field>
+        <name>flagfield</name>
+        </field>
+      <field>
+        <name>lastmodifiedtime_origin</name>
+        </field>
+      <field>
+        <name>lastmodifiedtime_destination</name>
+        </field>
+      <field>
+        <name>selectedAction</name>
+        </field>
+      <field>
+        <name>delete_flag</name>
+        </field>
+      <field>
+        <name>overwrite_flag</name>
+        </field>
+      <field>
+        <name>originRepo</name>
+        </field>
+      <field>
+        <name>destinationRepo</name>
+        </field>
+      </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>288</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Write to log 2</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <loglevel>log_level_basic</loglevel>
+      <displayHeader>Y</displayHeader>
+      <limitRows>N</limitRows>
+      <limitRowsNumber>0</limitRowsNumber>
+      <logmessage>process preview request&#x3a; result</logmessage>
+    <fields>
+      <field>
+        <name>file</name>
+        </field>
+      <field>
+        <name>modification_status</name>
+        </field>
+      <field>
+        <name>source</name>
+        </field>
+      <field>
+        <name>dest</name>
+        </field>
+      <field>
+        <name>type</name>
+        </field>
+      </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1536</xloc>
+      <yloc>640</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Write to log 3</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <loglevel>log_level_basic</loglevel>
+      <displayHeader>Y</displayHeader>
+      <limitRows>N</limitRows>
+      <limitRowsNumber>0</limitRowsNumber>
+      <logmessage>After processing the branches&#x3a;</logmessage>
+    <fields>
+      <field>
+        <name>file</name>
+        </field>
+      <field>
+        <name>modification_status</name>
+        </field>
+      <field>
+        <name>source</name>
+        </field>
+      <field>
+        <name>dest</name>
+        </field>
+      <field>
+        <name>type</name>
+        </field>
+      </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1184</xloc>
+      <yloc>352</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -525,7 +599,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-<send_true_to>end of filters</send_true_to>
+<send_true_to>select</send_true_to>
 <send_false_to/>
     <compare>
 <condition>
@@ -540,7 +614,7 @@
   <condition>
    <negated>N</negated>
    <operator>OR</operator>
-   <leftvalue>modification_status</leftvalue>
+   <leftvalue>status</leftvalue>
    <function>&#x3c;&#x3e;</function>
    <rightvalue/>
    <value><name>constant</name><type>String</type><text>to_be_deleted</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value>   </condition>
@@ -549,15 +623,15 @@
     </compare>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>1056</xloc>
+      <xloc>1440</xloc>
       <yloc>256</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>end of filters</name>
-    <type>Dummy</type>
+    <name>Export&#x3a; flagfield --&#x3e; status</name>
+    <type>ValueMapper</type>
     <description/>
     <distribute>N</distribute>
     <custom_distribution/>
@@ -566,10 +640,332 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
+    <field_to_use>flagfield</field_to_use>
+    <target_field>status</target_field>
+    <non_match_default/>
+    <fields>
+      <field>
+        <source_value>deleted</source_value>
+        <target_value>to_be_copied</target_value>
+      </field>
+      <field>
+        <source_value>new</source_value>
+        <target_value>to_be_deleted</target_value>
+      </field>
+      <field>
+        <source_value>changed</source_value>
+        <target_value>to_be_modified</target_value>
+      </field>
+    </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>1056</xloc>
+      <xloc>640</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Import&#x3a; flagfield --&#x3e; status</name>
+    <type>ValueMapper</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <field_to_use>flagfield</field_to_use>
+    <target_field>status</target_field>
+    <non_match_default/>
+    <fields>
+      <field>
+        <source_value>deleted</source_value>
+        <target_value>to_be_deleted</target_value>
+      </field>
+      <field>
+        <source_value>new</source_value>
+        <target_value>to_be_copied</target_value>
+      </field>
+      <field>
+        <source_value>changed</source_value>
+        <target_value>to_be_modified</target_value>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>640</xloc>
       <yloc>352</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>gen_folder_lines &#x28;if needed&#x29; Export</name>
+    <type>Mapping</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <specification_method>filename</specification_method>
+    <trans_object_id/>
+    <trans_name/>
+    <filename>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;_gen_folder_lines.ktr</filename>
+    <directory_path/>
+    <mappings>
+      <input>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>Y</main_path>
+    <rename_on_output>Y</rename_on_output>
+    <description/>
+       <connector><parent>filename_without_location</parent><child>filename</child></connector>
+       <connector><parent>type</parent><child>type</child></connector>
+       <connector><parent>status</parent><child>status</child></connector>
+    </mapping>      </input>
+      <output>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>Y</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+    </mapping>      </output>
+          <parameters>       <variablemapping><variable>cpk.plugin.dir</variable><input>&#x24;&#x7b;cpk.plugin.dir&#x7d;</input></variablemapping>
+       <variablemapping><variable>cpk.solution.system.dir</variable><input>&#x24;&#x7b;cpk.solution.system.dir&#x7d;</input></variablemapping>
+    <inherit_all_vars>Y</inherit_all_vars>
+    </parameters>
+    </mappings>
+    <allow_multiple_input>N</allow_multiple_input>
+    <allow_multiple_output>N</allow_multiple_output>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>928</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>gen_folder_lines &#x28;if needed&#x29; Import</name>
+    <type>Mapping</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <specification_method>filename</specification_method>
+    <trans_object_id/>
+    <trans_name/>
+    <filename>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;_gen_folder_lines.ktr</filename>
+    <directory_path/>
+    <mappings>
+      <input>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>Y</main_path>
+    <rename_on_output>Y</rename_on_output>
+    <description/>
+       <connector><parent>filename_without_location</parent><child>filename</child></connector>
+       <connector><parent>type</parent><child>type</child></connector>
+       <connector><parent>status</parent><child>status</child></connector>
+    </mapping>      </input>
+      <output>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>Y</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+    </mapping>      </output>
+          <parameters>       <variablemapping><variable>cpk.plugin.dir</variable><input>&#x24;&#x7b;cpk.plugin.dir&#x7d;</input></variablemapping>
+       <variablemapping><variable>cpk.solution.system.dir</variable><input>&#x24;&#x7b;cpk.solution.system.dir&#x7d;</input></variablemapping>
+    <inherit_all_vars>Y</inherit_all_vars>
+    </parameters>
+    </mappings>
+    <allow_multiple_input>N</allow_multiple_input>
+    <allow_multiple_output>N</allow_multiple_output>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>928</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>gen_folder_lines &#x28;if needed&#x29; Sync</name>
+    <type>Mapping</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <specification_method>filename</specification_method>
+    <trans_object_id/>
+    <trans_name/>
+    <filename>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;_gen_folder_lines.ktr</filename>
+    <directory_path/>
+    <mappings>
+      <input>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>Y</main_path>
+    <rename_on_output>Y</rename_on_output>
+    <description/>
+       <connector><parent>filename_without_location</parent><child>filename</child></connector>
+       <connector><parent>type</parent><child>type</child></connector>
+       <connector><parent>status</parent><child>status</child></connector>
+    </mapping>      </input>
+      <output>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>Y</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+    </mapping>      </output>
+          <parameters>       <variablemapping><variable>cpk.plugin.dir</variable><input>&#x24;&#x7b;cpk.plugin.dir&#x7d;</input></variablemapping>
+       <variablemapping><variable>cpk.solution.system.dir</variable><input>&#x24;&#x7b;cpk.solution.system.dir&#x7d;</input></variablemapping>
+    <inherit_all_vars>Y</inherit_all_vars>
+    </parameters>
+    </mappings>
+    <allow_multiple_input>N</allow_multiple_input>
+    <allow_multiple_output>N</allow_multiple_output>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>928</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>getLastSynchDate</name>
+    <type>Mapping</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <specification_method>filename</specification_method>
+    <trans_object_id/>
+    <trans_name/>
+    <filename>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;_getLastSynchDate.ktr</filename>
+    <directory_path/>
+    <mappings>
+      <input>
+      </input>
+      <output>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>Y</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+    </mapping>      </output>
+          <parameters>       <variablemapping><variable>cpk.plugin.dir</variable><input>&#x24;&#x7b;cpk.plugin.dir&#x7d;</input></variablemapping>
+       <variablemapping><variable>cpk.solution.system.dir</variable><input>&#x24;&#x7b;cpk.solution.system.dir&#x7d;</input></variablemapping>
+    <inherit_all_vars>Y</inherit_all_vars>
+    </parameters>
+    </mappings>
+    <allow_multiple_input>N</allow_multiple_input>
+    <allow_multiple_output>N</allow_multiple_output>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>288</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>int&#x28;timestamp&#x29;</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>        <select_unspecified>N</select_unspecified>
+      <meta>        <name>lastmodifiedtime_origin</name>
+        <rename>lastmodifiedtime_origin</rename>
+        <type>Integer</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>      <meta>        <name>lastmodifiedtime_destination</name>
+        <rename>lastmodifiedtime_destination</rename>
+        <type>Integer</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>384</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>join</name>
+    <type>JoinRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
+      <prefix>out</prefix>
+      <cache_size>500</cache_size>
+      <main>entry point</main>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue/>
+ <function>&#x3d;</function>
+ <rightvalue/>
+ </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>288</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -590,15 +986,140 @@
     <compare>
 <condition>
  <negated>N</negated>
- <leftvalue>modification_status</leftvalue>
+ <leftvalue>status</leftvalue>
  <function>&#x3c;&#x3e;</function>
  <rightvalue/>
  <value><name>constant</name><type>String</type><text>nothing_to_be_updated</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
     </compare>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>896</xloc>
+      <xloc>1248</xloc>
       <yloc>256</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>select</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>filename_without_location</name>
+        <rename>file</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>status</name>
+        <rename>modification_status</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>source</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>dest</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>type</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1440</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>source&#x26;dest</name>
+    <type>Janino</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+       <formula><field_name>source</field_name>
+<formula_string>originRepo</formula_string>
+<value_type>String</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<replace_field/>
+</formula>
+       <formula><field_name>dest</field_name>
+<formula_string>destinationRepo</formula_string>
+<value_type>String</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<replace_field/>
+</formula>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>768</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>source&#x26;dest 2</name>
+    <type>Janino</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+       <formula><field_name>source</field_name>
+<formula_string>destinationRepo</formula_string>
+<value_type>String</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<replace_field/>
+</formula>
+       <formula><field_name>dest</field_name>
+<formula_string>originRepo</formula_string>
+<value_type>String</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<replace_field/>
+</formula>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>768</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>entry point</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>160</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -609,6 +1130,10 @@
 </slave-step-copy-partition-distribution>
    <slave_transformation>N</slave_transformation>
 <attributes><group><name>DataService</name>
-</group></attributes>
+<attribute><key>name</key>
+<value/>
+</attribute><attribute><key>stepname</key>
+<value/>
+</attribute></group></attributes>
 
 </transformation>

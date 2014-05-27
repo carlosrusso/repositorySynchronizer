@@ -118,7 +118,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>32</xloc>
-      <yloc>224</yloc>
+      <yloc>320</yloc>
       </entry>
     <entry>
       <name>Delete files</name>
@@ -132,10 +132,10 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>704</xloc>
-      <yloc>256</yloc>
+      <yloc>384</yloc>
       </entry>
     <entry>
-      <name>_build_arguments_for_copying_deleting &#x28;copy files, uploading&#x29;</name>
+      <name>_build_arguments &#x28;copy files, uploading to JCR&#x29;</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -173,9 +173,6 @@
             </parameter>            <parameter>            <name>selectedAction</name>
             <stream_name/>
             <value>&#x24;&#x7b;selectedAction&#x7d;</value>
-            </parameter>            <parameter>            <name>overwrite</name>
-            <stream_name/>
-            <value>&#x24;&#x7b;overwrite&#x7d;</value>
             </parameter>            <parameter>            <name>cpk.solution.system.dir</name>
             <stream_name/>
             <value>&#x24;&#x7b;cpk.solution.system.dir&#x7d;</value>
@@ -189,7 +186,7 @@
       <yloc>96</yloc>
       </entry>
     <entry>
-      <name>_build_arguments_for_copying_deleting &#x28;delete folders&#x29;</name>
+      <name>_build_arguments &#x28;delete folders&#x29;</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -215,10 +212,7 @@
       <create_parent_folder>N</create_parent_folder>
       <logging_remote_work>N</logging_remote_work>
       <parameters>        <pass_all_parameters>Y</pass_all_parameters>
-            <parameter>            <name>delete</name>
-            <stream_name/>
-            <value>&#x24;&#x7b;delete&#x7d;</value>
-            </parameter>            <parameter>            <name>destinationRepoLocation</name>
+            <parameter>            <name>destinationRepoLocation</name>
             <stream_name/>
             <value>&#x24;&#x7b;destinationRepoLocation&#x7d;</value>
             </parameter>            <parameter>            <name>operation_type</name>
@@ -240,7 +234,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>512</xloc>
-      <yloc>352</yloc>
+      <yloc>480</yloc>
       </entry>
     <entry>
       <name>Delete folders</name>
@@ -255,10 +249,10 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>704</xloc>
-      <yloc>352</yloc>
+      <yloc>480</yloc>
       </entry>
     <entry>
-      <name>_build_arguments_for_copying_deleting &#x28;delete files&#x29;</name>
+      <name>_build_arguments &#x28;delete files&#x29;</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -284,10 +278,7 @@
       <create_parent_folder>N</create_parent_folder>
       <logging_remote_work>N</logging_remote_work>
       <parameters>        <pass_all_parameters>Y</pass_all_parameters>
-            <parameter>            <name>delete</name>
-            <stream_name/>
-            <value>&#x24;&#x7b;delete&#x7d;</value>
-            </parameter>            <parameter>            <name>destinationRepoLocation</name>
+            <parameter>            <name>destinationRepoLocation</name>
             <stream_name/>
             <value>&#x24;&#x7b;destinationRepoLocation&#x7d;</value>
             </parameter>            <parameter>            <name>operation_type</name>
@@ -309,10 +300,10 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>512</xloc>
-      <yloc>256</yloc>
+      <yloc>384</yloc>
       </entry>
     <entry>
-      <name>Copy Files</name>
+      <name>Download Files from JCR</name>
       <description/>
       <type>COPY_FILES</type>
       <copy_empty_folders>Y</copy_empty_folders>
@@ -328,11 +319,11 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>736</xloc>
-      <yloc>32</yloc>
+      <xloc>800</xloc>
+      <yloc>192</yloc>
       </entry>
     <entry>
-      <name>_build_arguments_for_copying_deleting &#x28;copy folders&#x29;</name>
+      <name>_build_arguments &#x28;copy folders&#x29;</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -370,9 +361,6 @@
             </parameter>            <parameter>            <name>selectedAction</name>
             <stream_name/>
             <value>&#x24;&#x7b;selectedAction&#x7d;</value>
-            </parameter>            <parameter>            <name>overwrite</name>
-            <stream_name/>
-            <value>&#x24;&#x7b;overwrite&#x7d;</value>
             </parameter>            <parameter>            <name>cpk.solution.system.dir</name>
             <stream_name/>
             <value>&#x24;&#x7b;cpk.solution.system.dir&#x7d;</value>
@@ -383,7 +371,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>512</xloc>
-      <yloc>192</yloc>
+      <yloc>288</yloc>
       </entry>
     <entry>
       <name>Copy Folders</name>
@@ -403,7 +391,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>832</xloc>
-      <yloc>160</yloc>
+      <yloc>256</yloc>
       </entry>
     <entry>
       <name>Create a folder</name>
@@ -415,7 +403,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>832</xloc>
-      <yloc>224</yloc>
+      <yloc>320</yloc>
       </entry>
     <entry>
       <name>_previewDifferences.kjb</name>
@@ -479,39 +467,39 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>224</xloc>
-      <yloc>224</yloc>
+      <xloc>160</xloc>
+      <yloc>320</yloc>
       </entry>
     <entry>
       <name>Zip file</name>
       <description/>
       <type>ZIP_FILE</type>
-      <zipfilename/>
+      <zipfilename>&#x24;&#x7b;zipfile_folder&#x7d;.zip</zipfilename>
       <compressionrate>3</compressionrate>
       <ifzipfileexists>1</ifzipfileexists>
-      <wildcard/>
+      <wildcard>.&#x2a;</wildcard>
       <wildcardexclude/>
-      <sourcedirectory/>
+      <sourcedirectory>&#x24;&#x7b;zipfile_folder&#x7d;</sourcedirectory>
       <movetodirectory/>
       <afterzip>0</afterzip>
-      <addfiletoresult>Y</addfiletoresult>
-      <isfromprevious>Y</isfromprevious>
+      <addfiletoresult>N</addfiletoresult>
+      <isfromprevious>N</isfromprevious>
       <createparentfolder>N</createparentfolder>
       <adddate>N</adddate>
       <addtime>N</addtime>
       <SpecifyFormat>N</SpecifyFormat>
       <date_time_format/>
       <createMoveToDirectory>Y</createMoveToDirectory>
-      <include_subfolders>N</include_subfolders>
-      <stored_source_path_depth>&#x24;&#x7b;zipfile_depth&#x7d;</stored_source_path_depth>
+      <include_subfolders>Y</include_subfolders>
+      <stored_source_path_depth>0 &#x3a; &#x2f;pentaho&#x2f;work&#x2f;transfer&#x2f;input&#x2f;project&#x2f;file.txt</stored_source_path_depth>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>736</xloc>
+      <xloc>992</xloc>
       <yloc>96</yloc>
       </entry>
     <entry>
-      <name>_build_arguments_for_copying_deleting &#x28;copy files, downloading&#x29;</name>
+      <name>_build_arguments &#x28;copy files, downloading&#x2f;export from JCR&#x29;</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -549,9 +537,6 @@
             </parameter>            <parameter>            <name>selectedAction</name>
             <stream_name/>
             <value>&#x24;&#x7b;selectedAction&#x7d;</value>
-            </parameter>            <parameter>            <name>overwrite</name>
-            <stream_name/>
-            <value>&#x24;&#x7b;overwrite&#x7d;</value>
             </parameter>            <parameter>            <name>cpk.solution.system.dir</name>
             <stream_name/>
             <value>&#x24;&#x7b;cpk.solution.system.dir&#x7d;</value>
@@ -562,24 +547,10 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>512</xloc>
-      <yloc>32</yloc>
+      <yloc>192</yloc>
       </entry>
     <entry>
-      <name>Delete zip files</name>
-      <description/>
-      <type>DELETE_FILES</type>
-      <arg_from_previous>Y</arg_from_previous>
-      <include_subfolders>N</include_subfolders>
-      <fields>
-      </fields>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>1152</xloc>
-      <yloc>96</yloc>
-      </entry>
-    <entry>
-      <name>Copy Files 2</name>
+      <name>stage files</name>
       <description/>
       <type>COPY_FILES</type>
       <copy_empty_folders>Y</copy_empty_folders>
@@ -595,7 +566,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>864</xloc>
+      <xloc>896</xloc>
       <yloc>96</yloc>
       </entry>
     <entry>
@@ -607,21 +578,113 @@
       <file_variable_type>ROOT_JOB</file_variable_type>
       <fields>
         <field>
-          <variable_name>zipfile_depth</variable_name>
-          <variable_value>0</variable_value>
-          <variable_type>ROOT_JOB</variable_type>
+          <variable_name>zipfile_folder</variable_name>
+          <variable_value>&#x24;&#x7b;cpk.solution.system.dir&#x7d;&#x2f;plugin-cache&#x2f;repositorySynchronizer&#x2f;upload_to_JCR</variable_value>
+          <variable_type>JVM</variable_type>
         </field>
       </fields>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>128</xloc>
-      <yloc>224</yloc>
+      <xloc>288</xloc>
+      <yloc>320</yloc>
+      </entry>
+    <entry>
+      <name>Delete staging folder</name>
+      <description/>
+      <type>DELETE_FOLDERS</type>
+      <arg_from_previous>N</arg_from_previous>
+      <success_condition>success_if_errors_less</success_condition>
+      <limit_folders>2</limit_folders>
+      <fields>
+        <field>
+          <name>&#x24;&#x7b;zipfile_folder&#x7d;</name>
+        </field>
+      </fields>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>768</xloc>
+      <yloc>96</yloc>
+      </entry>
+    <entry>
+      <name>copy zip to JCR</name>
+      <description/>
+      <type>COPY_FILES</type>
+      <copy_empty_folders>Y</copy_empty_folders>
+      <arg_from_previous>N</arg_from_previous>
+      <overwrite_files>N</overwrite_files>
+      <include_subfolders>N</include_subfolders>
+      <remove_source_files>N</remove_source_files>
+      <add_result_filesname>Y</add_result_filesname>
+      <destination_is_a_file>N</destination_is_a_file>
+      <create_destination_folder>N</create_destination_folder>
+      <fields>
+        <field>
+          <source_filefolder>&#x24;&#x7b;zipfile_folder&#x7d;.zip</source_filefolder>
+          <destination_filefolder>&#x24;&#x7b;jcr&#x7d;</destination_filefolder>
+          <wildcard>.&#x2a;</wildcard>
+        </field>
+      </fields>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1088</xloc>
+      <yloc>96</yloc>
+      </entry>
+    <entry>
+      <name>Delete staging folder 2</name>
+      <description/>
+      <type>DELETE_FOLDERS</type>
+      <arg_from_previous>N</arg_from_previous>
+      <success_condition>success_if_errors_less</success_condition>
+      <limit_folders>2</limit_folders>
+      <fields>
+        <field>
+          <name>&#x24;&#x7b;zipfile_folder&#x7d;</name>
+        </field>
+      </fields>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1376</xloc>
+      <yloc>96</yloc>
+      </entry>
+    <entry>
+      <name>Delete files 2</name>
+      <description/>
+      <type>DELETE_FILES</type>
+      <arg_from_previous>N</arg_from_previous>
+      <include_subfolders>N</include_subfolders>
+      <fields>
+        <field>
+          <name>&#x24;&#x7b;zipfile_folder&#x7d;.zip</name>
+          <filemask>.&#x2a;</filemask>
+        </field>
+      </fields>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1248</xloc>
+      <yloc>96</yloc>
+      </entry>
+    <entry>
+      <name>Write To Log</name>
+      <description/>
+      <type>WRITE_TO_LOG</type>
+      <logmessage>zip folder&#x3a; &#x24;&#x7b;zipfile_folder&#x7d;&#xa;jcr &#x3a; &#x24;&#x7b;jcr&#x7d;</logmessage>
+      <loglevel>Basic</loglevel>
+      <logsubject>&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;</logsubject>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>960</xloc>
+      <yloc>192</yloc>
       </entry>
   </entries>
   <hops>
     <hop>
-      <from>_build_arguments_for_copying_deleting &#x28;delete folders&#x29;</from>
+      <from>_build_arguments &#x28;delete folders&#x29;</from>
       <to>Delete folders</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -630,7 +693,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>_build_arguments_for_copying_deleting &#x28;delete files&#x29;</from>
+      <from>_build_arguments &#x28;delete files&#x29;</from>
       <to>Delete files</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -639,7 +702,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>_build_arguments_for_copying_deleting &#x28;copy folders&#x29;</from>
+      <from>_build_arguments &#x28;copy folders&#x29;</from>
       <to>Copy Folders</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -648,7 +711,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>_build_arguments_for_copying_deleting &#x28;copy folders&#x29;</from>
+      <from>_build_arguments &#x28;copy folders&#x29;</from>
       <to>Create a folder</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -657,8 +720,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>_previewDifferences.kjb</from>
-      <to>_build_arguments_for_copying_deleting &#x28;copy files, uploading&#x29;</to>
+      <from>_build_arguments &#x28;copy files, downloading&#x2f;export from JCR&#x29;</from>
+      <to>Download Files from JCR</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -666,52 +729,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>_previewDifferences.kjb</from>
-      <to>_build_arguments_for_copying_deleting &#x28;copy folders&#x29;</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>_previewDifferences.kjb</from>
-      <to>_build_arguments_for_copying_deleting &#x28;delete files&#x29;</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>_previewDifferences.kjb</from>
-      <to>_build_arguments_for_copying_deleting &#x28;delete folders&#x29;</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>_previewDifferences.kjb</from>
-      <to>_build_arguments_for_copying_deleting &#x28;copy files, downloading&#x29;</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>_build_arguments_for_copying_deleting &#x28;copy files, downloading&#x29;</from>
-      <to>Copy Files</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>N</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>_build_arguments_for_copying_deleting &#x28;copy files, uploading&#x29;</from>
+      <from>stage files</from>
       <to>Zip file</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -720,8 +738,35 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
+      <from>_build_arguments &#x28;copy files, uploading to JCR&#x29;</from>
+      <to>Delete staging folder</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Delete staging folder</from>
+      <to>stage files</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
       <from>Zip file</from>
-      <to>Copy Files 2</to>
+      <to>copy zip to JCR</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>copy zip to JCR</from>
+      <to>Delete files 2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>N</enabled>
@@ -729,16 +774,34 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Copy Files 2</from>
-      <to>Delete zip files</to>
+      <from>Delete files 2</from>
+      <to>Delete staging folder 2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>N</enabled>
       <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Zip file</from>
+      <to>Write To Log</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
       <unconditional>Y</unconditional>
     </hop>
     <hop>
       <from>START</from>
+      <to>_previewDifferences.kjb</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>_previewDifferences.kjb</from>
       <to>Set variables</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -748,12 +811,48 @@
     </hop>
     <hop>
       <from>Set variables</from>
-      <to>_previewDifferences.kjb</to>
+      <to>_build_arguments &#x28;copy files, uploading to JCR&#x29;</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Set variables</from>
+      <to>_build_arguments &#x28;copy files, downloading&#x2f;export from JCR&#x29;</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Set variables</from>
+      <to>_build_arguments &#x28;copy folders&#x29;</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Set variables</from>
+      <to>_build_arguments &#x28;delete files&#x29;</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Set variables</from>
+      <to>_build_arguments &#x28;delete folders&#x29;</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
     </hop>
   </hops>
   <notepads>

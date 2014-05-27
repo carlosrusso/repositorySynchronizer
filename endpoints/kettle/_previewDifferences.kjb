@@ -187,7 +187,7 @@
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
       <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
+      <clear_rows>Y</clear_rows>
       <clear_files>N</clear_files>
       <set_logfile>N</set_logfile>
       <logfile/>
@@ -244,7 +244,7 @@
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
       <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
+      <clear_rows>Y</clear_rows>
       <clear_files>N</clear_files>
       <set_logfile>N</set_logfile>
       <logfile/>
@@ -329,16 +329,6 @@
       <xloc>416</xloc>
       <yloc>96</yloc>
       </entry>
-    <entry>
-      <name>Success</name>
-      <description/>
-      <type>SUCCESS</type>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>544</xloc>
-      <yloc>96</yloc>
-      </entry>
   </entries>
   <hops>
     <hop>
@@ -386,17 +376,29 @@
       <evaluation>N</evaluation>
       <unconditional>Y</unconditional>
     </hop>
-    <hop>
-      <from>process preview request</from>
-      <to>Success</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
   </hops>
   <notepads>
+    <notepad>
+      <note>originRepo and destinationRepo parameters are ignored.&#xa;selectAction is used to determine which side is origin and destination&#x3a;&#xa;&#xa;originRepo is always &#x22;JCR&#x22;&#xa;destinationRepo is always &#x22;File System&#x22;</note>
+      <xloc>160</xloc>
+      <yloc>288</yloc>
+      <width>386</width>
+      <heigth>80</heigth>
+      <fontname>Arial</fontname>
+      <fontsize>12</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
 <attributes><group><name>JobRestart</name>
 <attribute><key>UniqueConnections</key>
